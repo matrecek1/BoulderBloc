@@ -1,6 +1,6 @@
 import { Router, RequestHandler } from "express"
 import {GymController} from "../../controller/gym/gym.controller"
-import { validateGymInput } from "../../middleware/gym/gym.middleware"
+import { validateGymInput, validateGymUpdateInput, validateRating } from "../../middleware/gym/gym.middleware"
 import { catchAsync } from "../../utils/catchAsync"
 
 const router = Router()
@@ -14,11 +14,11 @@ router.post('/', validateGymInput, catchAsync(controller.addGym))// creates new 
 
 router.get('/:gymId', catchAsync(controller.getGym))//gets one gym
 
-router.put('/:gymId',)//update one gym
+router.patch('/:gymId', validateGymUpdateInput, catchAsync(controller.updateGym) )//update one gym
 
-router.delete('/:gymId',)// deletes one gym
+router.delete('/:gymId', catchAsync(controller.deleteGym))// deletes one gym
 
-router.patch(':gymId/ratings', )//add Rating
+router.patch('/:gymId/ratings', validateRating,catchAsync(controller.addRating))//add Rating
 
 // router.get('/', catchAsync(controller.getBoulders)) // gets all boulders
 

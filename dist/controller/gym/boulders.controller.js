@@ -50,7 +50,7 @@ class BouldersController {
             const boulderId = req.params.boulderId;
             const update = req.validatedBody;
             const boulder = yield boulder_1.BoulderModel.findByIdAndUpdate(boulderId, update);
-            res.status(200).json({ message: "boulder updated", boulder });
+            res.status(200).json({ message: "boulder updated" });
         });
     }
     addRating(req, res) {

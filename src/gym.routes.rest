@@ -2,10 +2,28 @@ POST http://localhost:3000/gyms
 content-type: application/json
 
 {
-    "name": "The One", 
-    "description": "Bouldery Boulder"
+    "name": "The 135", 
+    "description": "234oulder"
 }
-###
+### all gyms
 GET http://localhost:3000/gyms
-###
-GET http://localhost:3000/gyms/63d6cb6da3b2dd52282ce67d
+### one gym
+GET http://localhost:3000/gyms/63d6e656b25f2b8b96da8240
+### update gym
+PATCH http://localhost:3000/gyms/63d6e656b25f2b8b96da8240
+content-type: application/json
+
+{
+    "name": "The Two", 
+    "description": "Bouldery Boulder2"
+}
+### delete gym
+DELETE http://localhost:3000/gyms/63d6e656b25f2b8b96da8240
+
+### add rating
+PATCH http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/ratings
+content-type: application/json
+
+{
+    "rating": 3
+}

@@ -40,6 +40,36 @@ class GymController {
             return res.status(200).json({ gym });
         });
     }
+    updateGym(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const gymId = req.params.gymId;
+            const update = req.validatedBody;
+            yield gym_1.Gym.findByIdAndUpdate(gymId, update);
+            return res.status(200).json({ message: "Successfully updated" });
+        });
+    }
+    deleteGym(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const gymId = req.params.gymId;
+            const deletedGym = yield gym_1.Gym.findByIdAndDelete(gymId);
+            if (!deletedGym)
+                throw new expressError_1.ExpressError("Gym not found", 404);
+            return res.status(200).json({ message: "Successfully deleted", deletedGym });
+        });
+    }
+    addRating(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const rating = req.validatedBody;
+            console.log(rating);
+            const gymId = req.params.gymId;
+            const gym = yield gym_1.Gym.findById(gymId).select("rating");
+            if (!gym)
+                return new expressError_1.ExpressError("gym not found", 404);
+            gym.addRating(rating);
+            const savedGym = yield gym.save();
+            res.status(201).json({ message: "Rating added", savedGym });
+        });
+    }
 }
 exports.GymController = GymController;
 //# sourceMappingURL=gym.controller.js.map

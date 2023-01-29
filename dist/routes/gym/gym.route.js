@@ -10,9 +10,9 @@ const controller = new gym_controller_1.GymController();
 router.get('/', (0, catchAsync_1.catchAsync)(controller.getGyms)); //gets all gyms
 router.post('/', gym_middleware_1.validateGymInput, (0, catchAsync_1.catchAsync)(controller.addGym)); // creates new gym
 router.get('/:gymId', (0, catchAsync_1.catchAsync)(controller.getGym)); //gets one gym
-router.put('/:gymId'); //update one gym
-router.delete('/:gymId'); // deletes one gym
-router.patch(':gymId/ratings'); //add Rating
+router.patch('/:gymId', gym_middleware_1.validateGymUpdateInput, (0, catchAsync_1.catchAsync)(controller.updateGym)); //update one gym
+router.delete('/:gymId', (0, catchAsync_1.catchAsync)(controller.deleteGym)); // deletes one gym
+router.patch('/:gymId/ratings', gym_middleware_1.validateRating, (0, catchAsync_1.catchAsync)(controller.addRating)); //add Rating
 // router.get('/', catchAsync(controller.getBoulders)) // gets all boulders
 // router.post('/', validateBoulderInput, catchAsync(controller.addBoulder))
 // router.get('/:boulderId', catchAsync(controller.getBoulder) as RequestHandler) // gets one boulder
