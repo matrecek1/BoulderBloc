@@ -1,0 +1,20 @@
+{
+  "name": "boulder-bloc-api",
+  "version": "1.0.0",
+  "description": "An API for boulderers, where you can create, fetch, grade, and rate boulders from climbing gyms. After ill have this finished, I plan to create a website or an application implementing this API.",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.16",
+    "@types/node": "^18.11.18",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.9.0"
+  }
+}

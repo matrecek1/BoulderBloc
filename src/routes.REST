@@ -1,0 +1,56 @@
+GET  http://localhost:3000/boulders
+
+###
+POST http://localhost:3000/boulders
+content-type: application/json
+
+{
+    "name": "Boulder", 
+    "description": "Bouldery Boulder",
+    "imgUrl":  "http://thisisboulderimage.com",
+    "bGrade": "7A"
+}
+
+###
+GET  http://localhost:3000/boulders/63d648df7aee3154c89dc546
+
+###
+PATCH  http://localhost:3000/boulders/63d648df7aee3154c89dc546
+content-type: application/json
+
+{
+    "name": "Boulder23.0", 
+    "description": "Bouldery2",
+    "imgUrl":  "http://thisisboulderimage.com",
+    "bGrade": "7B"
+}
+
+###
+DELETE  http://localhost:3000/boulders/63d648df7aee3154c89dc546
+
+###
+POST http://localhost:3000/boulders/63d648df7aee3154c89dc546/ratings
+content-type: application/json
+
+{
+    "rating": 1
+}
+###
+PATCH  http://localhost:3000/boulders/63d648df7aee3154c89dc546/grades/propose-grade
+content-type: application/json
+
+{
+    "grade": "8A"
+}
+###
+PATCH  http://localhost:3000/boulders/63d648df7aee3154c89dc546/grades/change-grade
+content-type: application/json
+
+{
+    "grade": "8A"
+}
+###
+
+
+
+
