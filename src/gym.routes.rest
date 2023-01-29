@@ -1,0 +1,11 @@
+POST http://localhost:3000/gyms
+content-type: application/json
+
+{
+    "name": "The One", 
+    "description": "Bouldery Boulder"
+}
+###
+GET http://localhost:3000/gyms
+###
+GET http://localhost:3000/gyms/63d6cb6da3b2dd52282ce67d

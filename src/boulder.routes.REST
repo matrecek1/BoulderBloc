@@ -28,7 +28,7 @@ content-type: application/json
 DELETE  http://localhost:3000/boulders/63d648df7aee3154c89dc546
 
 ###
-POST http://localhost:3000/boulders/63d648df7aee3154c89dc546/ratings
+POST http://localhost:3000/boulders/63d6c20b780318843a67a541/ratings
 content-type: application/json
 
 {

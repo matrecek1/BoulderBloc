@@ -18,6 +18,7 @@ const BoulderSchema = new Schema<Boulder>({
         averageRating:{
         },
         ratings:[{
+            type: String
         }]
     },
     grade:{

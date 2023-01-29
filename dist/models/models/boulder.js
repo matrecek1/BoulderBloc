@@ -18,7 +18,9 @@ const BoulderSchema = new mongoose_1.Schema({
     },
     rating: {
         averageRating: {},
-        ratings: [{}]
+        ratings: [{
+                type: String
+            }]
     },
     grade: {
         activeGrade: {

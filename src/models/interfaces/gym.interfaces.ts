@@ -1,8 +1,8 @@
 
-export enum AllRatings{
+export enum AllRatings {
     OneStar = 1,
     TwoStars = 2,
-    ThreeStars= 3,
+    ThreeStars = 3,
     FourStars = 4,
     FiveStars = 5
 }
@@ -22,7 +22,7 @@ export class Boulder implements Rateable {
         activeGrade: string;
         proposedGrades: string[];
     }
-    constructor(public name:string, public description:string, bGrade:string,public imgUrl:string){
+    constructor(public name: string, public description: string, bGrade: string, public imgUrl: string) {
         this.rating = {
             averageRating: 'Not Rated',
             ratings: []
@@ -32,36 +32,36 @@ export class Boulder implements Rateable {
             proposedGrades: []
         }
     }
-    proposeGrade(grade: string){
+    proposeGrade(grade: string) {
         this.grade.proposedGrades.push(grade)
     }
-    changeActiveGrade(grade:string){
+    changeActiveGrade(grade: string) {
         this.grade.activeGrade = grade
     }
-    updateAverageRating(){
+    updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length
         this.rating.averageRating = parseFloat(average.toFixed(1))
     }
-    addRating(rating:number){
+    addRating(rating: number) {
         this.rating.ratings.push(rating)
         this.updateAverageRating()
     }
 }
 
-export class Wall implements Rateable{
+export class Wall implements Rateable {
     rating: {
         averageRating: number | 'Not Rated';
         ratings: AllRatings[]
     }
     boulders: Boulder[]
-    constructor(public name: string, public description: string,public angle: number) {
+    constructor(public name: string, public description: string, public angle: number) {
         this.rating = {
             averageRating: 'Not Rated',
             ratings: []
         }
         this.boulders = []
     }
-    addBoulder(boulder:Boulder){
+    addBoulder(boulder: Boulder) {
         this.boulders.push(boulder)
     }
     updateAverageRating() {
@@ -77,23 +77,23 @@ export class Wall implements Rateable{
 
 export class CGym implements Rateable {
     rating: {
-        averageRating: number| 'Not Rated';
+        averageRating: number | 'Not Rated';
         ratings: AllRatings[]
     }
     walls: Wall[]
-    constructor(private name:string, private description:string){
+    constructor(public name: string, public description: string) {
         this.rating = {
             averageRating: 'Not Rated',
-            ratings:[]
+            ratings: []
         }
         this.walls = []
     }
-    addWall(wall:Wall){
+    addWall(wall: Wall) {
         this.walls.push(wall)
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length
-        this.rating.averageRating = average
+        this.rating.averageRating = parseFloat(average.toFixed(1))
     }
     addRating(rating: number) {
         this.rating.ratings.push(rating)

@@ -2,9 +2,10 @@ import express, { RequestHandler, Request, Response, NextFunction } from "expres
 import { BoulderModel } from "./models/models/boulder";
 import mongoose from 'mongoose'
 import { Boulder } from "./models/interfaces/gym.interfaces";
-import justBoulders from "./routes/gym/boulders.route"
 import { ExpressError } from "./utils/expressError";
 
+import justBoulders from "./routes/gym/boulders.route"
+import gymRoutes from "./routes/gym/gym.route"
 const app = express();
 
 
@@ -18,6 +19,7 @@ main().catch(err => console.log(err));
 app.use(express.json())
 
 app.use("/boulders", justBoulders)
+app.use('/gyms', gymRoutes)
 
 app.all("*", (req, res, next) => {
     next(new ExpressError("page not found", 404));
