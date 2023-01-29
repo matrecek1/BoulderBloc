@@ -1,23 +1,12 @@
 import { RequestHandler, Request, Response, NextFunction } from "express";
 import { CGym, Wall, Boulder, AllRatings, Rateable } from "../../models/interfaces/gym.interfaces"
 import { BoulderModel } from "../../models/models/boulder";
-interface Updatable {
-    name?: string,
-    description?: string,
-    imgUrl?: string,
-    grade?: {
-        activeGrade?: string
-    }
-}
+import { ExpressError } from "../../utils/expressError";
+
 
 export class BouldersController {
     async addBoulder(req: Request, res: Response) {
-        // req.body must have: name, description, bGrade, imgUrl
-        const { name, description, bGrade, imgUrl } = req.body
-        //this validation is completely basic and only validates if they exist, it should check for more
-        if (!name || !description || !bGrade || !imgUrl) {
-            return res.status(400).json({ message: "Missing required fields" });
-        }
+        const {name, description, bGrade, imgUrl} = req.validatedBody
         const boulder = new Boulder(name, description, bGrade, imgUrl);
         const newBoulder = new BoulderModel(boulder)
         const savedBoulder = await newBoulder.save()
@@ -43,37 +32,32 @@ export class BouldersController {
     }
     async updateBoulder(req: Request, res: Response) {
         const boulderId = req.params.boulderId
-        let update: Updatable = {}
-        if (req.body.imgUrl && req.body.imgUrl.length) update.imgUrl = req.body.imgUrl
-        if (req.body.name && req.body.name.length) update.name = req.body.name
-        if (req.body.description && req.body.description.length) update.description = req.body.description
-        //add some validations and move them away from here
+        const update = req.validatedBody
         const boulder = await BoulderModel.findByIdAndUpdate(boulderId, update);
         res.status(200).json({ message: "boulder updated", boulder });
     }
     
     async addRating(req: Request, res: Response) {
-        const rating: AllRatings = req.body.rating
+        const rating: AllRatings = req.validatedBody
+        console.log(rating);
         const boulderId = req.params.boulderId
         const boulder = await BoulderModel.findById(boulderId).select("rating")
-        if (!boulder) return res.status(404).json({ message: "Boulder not found" }) 
+        if (!boulder) return new ExpressError("Boulder not found", 404)
         boulder.addRating(rating)
         const savedBoulder = await boulder.save()
         res.status(201).json({message:"Rating added", savedBoulder})
     }
     async proposeGrade(req:Request, res:Response){
-        //validate grade
-        const grade = req.body.grade
+        const grade = req.validatedBody
         const boulderId = req.params.boulderId
         const boulder = await BoulderModel.findById(boulderId)
-        console.log(boulder);
         if (!boulder) return res.status(404).json({ message: "Boulder not found" }) 
         boulder.proposeGrade(grade)
         const savedBoulder = await boulder.save()
         res.status(201).json({message:"Grade proposed",savedBoulder})
     }
     async changeGrade(req: Request, res: Response) {
-        const grade = req.body.grade
+        const grade = req.validatedBody
         const boulderId = req.params.boulderId
         const boulder = await BoulderModel.findById(boulderId).select("grade")
         if (!boulder) return res.status(404).json({ message: "Boulder not found" })

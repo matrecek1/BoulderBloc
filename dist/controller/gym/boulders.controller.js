@@ -12,15 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BouldersController = void 0;
 const gym_interfaces_1 = require("../../models/interfaces/gym.interfaces");
 const boulder_1 = require("../../models/models/boulder");
+const expressError_1 = require("../../utils/expressError");
 class BouldersController {
     addBoulder(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            // req.body must have: name, description, bGrade, imgUrl
-            const { name, description, bGrade, imgUrl } = req.body;
-            //this validation is completely basic and only validates if they exist, it should check for more
-            if (!name || !description || !bGrade || !imgUrl) {
-                return res.status(400).json({ message: "Missing required fields" });
-            }
+            const { name, description, bGrade, imgUrl } = req.validatedBody;
             const boulder = new gym_interfaces_1.Boulder(name, description, bGrade, imgUrl);
             const newBoulder = new boulder_1.BoulderModel(boulder);
             const savedBoulder = yield newBoulder.save();
@@ -52,25 +48,19 @@ class BouldersController {
     updateBoulder(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const boulderId = req.params.boulderId;
-            let update = {};
-            if (req.body.imgUrl && req.body.imgUrl.length)
-                update.imgUrl = req.body.imgUrl;
-            if (req.body.name && req.body.name.length)
-                update.name = req.body.name;
-            if (req.body.description && req.body.description.length)
-                update.description = req.body.description;
-            //add some validations and move them away from here
+            const update = req.validatedBody;
             const boulder = yield boulder_1.BoulderModel.findByIdAndUpdate(boulderId, update);
             res.status(200).json({ message: "boulder updated", boulder });
         });
     }
     addRating(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const rating = req.body.rating;
+            const rating = req.validatedBody;
+            console.log(rating);
             const boulderId = req.params.boulderId;
             const boulder = yield boulder_1.BoulderModel.findById(boulderId).select("rating");
             if (!boulder)
-                return res.status(404).json({ message: "Boulder not found" });
+                return new expressError_1.ExpressError("Boulder not found", 404);
             boulder.addRating(rating);
             const savedBoulder = yield boulder.save();
             res.status(201).json({ message: "Rating added", savedBoulder });
@@ -78,11 +68,9 @@ class BouldersController {
     }
     proposeGrade(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //validate grade
-            const grade = req.body.grade;
+            const grade = req.validatedBody;
             const boulderId = req.params.boulderId;
             const boulder = yield boulder_1.BoulderModel.findById(boulderId);
-            console.log(boulder);
             if (!boulder)
                 return res.status(404).json({ message: "Boulder not found" });
             boulder.proposeGrade(grade);
@@ -92,7 +80,7 @@ class BouldersController {
     }
     changeGrade(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const grade = req.body.grade;
+            const grade = req.validatedBody;
             const boulderId = req.params.boulderId;
             const boulder = yield boulder_1.BoulderModel.findById(boulderId).select("grade");
             if (!boulder)

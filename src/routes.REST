@@ -5,10 +5,10 @@ POST http://localhost:3000/boulders
 content-type: application/json
 
 {
-    "name": "Boulder", 
+    "name": "The One", 
     "description": "Bouldery Boulder",
     "imgUrl":  "http://thisisboulderimage.com",
-    "bGrade": "7A"
+    "bGrade": "7B+"
 }
 
 ###
@@ -19,10 +19,9 @@ PATCH  http://localhost:3000/boulders/63d648df7aee3154c89dc546
 content-type: application/json
 
 {
-    "name": "Boulder23.0", 
-    "description": "Bouldery2",
-    "imgUrl":  "http://thisisboulderimage.com",
-    "bGrade": "7B"
+    "name": "this is ameriCA", 
+    "description": "rwgwrgwreg",
+    "imgUrl": "http://thisisboulderimage.com"
 }
 
 ###
@@ -47,7 +46,7 @@ PATCH  http://localhost:3000/boulders/63d648df7aee3154c89dc546/grades/change-gra
 content-type: application/json
 
 {
-    "grade": "8A"
+    "grade": "7A"
 }
 ###
 

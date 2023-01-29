@@ -1,8 +1,9 @@
-import express, {RequestHandler, Request, Response, NextFunction} from "express"
+import express, { RequestHandler, Request, Response, NextFunction } from "express"
 import { BoulderModel } from "./models/models/boulder";
 import mongoose from 'mongoose'
 import { Boulder } from "./models/interfaces/gym.interfaces";
 import justBoulders from "./routes/gym/boulders.route"
+import { ExpressError } from "./utils/expressError";
 
 const app = express();
 
@@ -18,9 +19,17 @@ app.use(express.json())
 
 app.use("/boulders", justBoulders)
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    res.status(500).render("error", { err })
-})
+app.all("*", (req, res, next) => {
+    next(new ExpressError("page not found", 404));
+});
+app.use(function (err: Error, req: Request, res: Response, next: NextFunction) {
+    if (err instanceof ExpressError) {
+        return res.status(err.statusCode).json({ message: err.message });
+    } else {
+        console.error(err);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+});
 
 
 app.listen('3000', () => {

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const boulders_route_1 = __importDefault(require("./routes/gym/boulders.route"));
+const expressError_1 = require("./utils/expressError");
 const app = (0, express_1.default)();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -26,8 +27,17 @@ function main() {
 main().catch(err => console.log(err));
 app.use(express_1.default.json());
 app.use("/boulders", boulders_route_1.default);
-app.use((err, req, res, next) => {
-    res.status(500).render("error", { err });
+app.all("*", (req, res, next) => {
+    next(new expressError_1.ExpressError("page not found", 404));
+});
+app.use(function (err, req, res, next) {
+    if (err instanceof expressError_1.ExpressError) {
+        return res.status(err.statusCode).json({ message: err.message });
+    }
+    else {
+        console.error(err);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
 });
 app.listen('3000', () => {
     console.log(`Listening on port 3000, Url: http://localhost:3000`);
