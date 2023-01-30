@@ -1,7 +1,7 @@
 import {Schema, model} from 'mongoose'
 import { Boulder } from '../interfaces/gym.interfaces'
 
-const BoulderSchema = new Schema<Boulder>({
+export const BoulderSchema = new Schema<Boulder>({
     name: {
         type: String,
         required:true,

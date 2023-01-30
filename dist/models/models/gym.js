@@ -17,7 +17,7 @@ const GymSchema = new mongoose_1.Schema({
         averageRating: {},
         ratings: [{}]
     },
-    walls: [wall_1.WallModel]
+    walls: [wall_1.WallSchema]
 });
 GymSchema.loadClass(gym_interfaces_1.CGym);
 exports.Gym = (0, mongoose_1.model)("Gym", GymSchema);

@@ -6,6 +6,8 @@ import { ExpressError } from "./utils/expressError";
 
 import justBoulders from "./routes/gym/boulders.route"
 import gymRoutes from "./routes/gym/gym.route"
+import wallRoutes from "./routes/gym/wall.route"
+
 const app = express();
 
 
@@ -20,6 +22,8 @@ app.use(express.json())
 
 app.use("/boulders", justBoulders)
 app.use('/gyms', gymRoutes)
+app.use('/gyms', wallRoutes)
+
 
 app.all("*", (req, res, next) => {
     next(new ExpressError("page not found", 404));

@@ -20,6 +20,7 @@ router.delete('/:gymId', catchAsync(controller.deleteGym))// deletes one gym
 
 router.patch('/:gymId/ratings', validateRating,catchAsync(controller.addRating))//add Rating
 
+
 // router.get('/', catchAsync(controller.getBoulders)) // gets all boulders
 
 // router.post('/', validateBoulderInput, catchAsync(controller.addBoulder))

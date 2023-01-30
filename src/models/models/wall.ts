@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose'
 import { Wall, Boulder } from '../interfaces/gym.interfaces'
-import { BoulderModel } from './boulder'
+import { BoulderModel, BoulderSchema } from './boulder'
 
-const WallSchema = new Schema<Wall>({
+export const WallSchema = new Schema<Wall>({
     name: {
         type: String,
         required: true,
@@ -11,13 +11,16 @@ const WallSchema = new Schema<Wall>({
         type: String,
         required: true,
     },
+    angle: {
+        type: Number
+    },
     rating: {
         averageRating: {
         },
         ratings: [{
         }]
     },
-    boulders: [BoulderModel]
+    boulders: [BoulderSchema]
 })
 
 WallSchema.loadClass(Wall)

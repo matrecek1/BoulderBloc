@@ -39,7 +39,6 @@ export class GymController{
     }
     async addRating(req: Request, res: Response) {
         const rating: AllRatings = req.validatedBody
-        console.log(rating);
         const gymId = req.params.gymId
         const gym = await Gym.findById(gymId).select("rating")
         if (!gym) return new ExpressError("gym not found", 404)

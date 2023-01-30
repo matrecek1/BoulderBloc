@@ -1,0 +1,17 @@
+POST  http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls
+content-type: application/json
+
+{
+    "name": "this should be a wall on a gym",
+    "description": "this should be a wall on a gym",
+    "angle": "45"
+}
+###
+GET http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls
+###
+PATCH http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls/63d796dfe5a28e2fb63434fc/ratings
+content-type: application/json
+
+{
+    "rating": 3
+}

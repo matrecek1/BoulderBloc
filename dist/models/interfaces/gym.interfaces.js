@@ -55,7 +55,7 @@ class Wall {
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length;
-        this.rating.averageRating = average;
+        this.rating.averageRating = parseFloat(average.toFixed(1));
     }
     addRating(rating) {
         this.rating.ratings.push(rating);

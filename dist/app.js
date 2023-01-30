@@ -17,6 +17,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const expressError_1 = require("./utils/expressError");
 const boulders_route_1 = __importDefault(require("./routes/gym/boulders.route"));
 const gym_route_1 = __importDefault(require("./routes/gym/gym.route"));
+const wall_route_1 = __importDefault(require("./routes/gym/wall.route"));
 const app = (0, express_1.default)();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29,6 +30,7 @@ main().catch(err => console.log(err));
 app.use(express_1.default.json());
 app.use("/boulders", boulders_route_1.default);
 app.use('/gyms', gym_route_1.default);
+app.use('/gyms', wall_route_1.default);
 app.all("*", (req, res, next) => {
     next(new expressError_1.ExpressError("page not found", 404));
 });

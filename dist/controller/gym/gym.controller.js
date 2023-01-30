@@ -60,7 +60,6 @@ class GymController {
     addRating(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const rating = req.validatedBody;
-            console.log(rating);
             const gymId = req.params.gymId;
             const gym = yield gym_1.Gym.findById(gymId).select("rating");
             if (!gym)

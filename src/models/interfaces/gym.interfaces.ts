@@ -53,6 +53,7 @@ export class Wall implements Rateable {
         averageRating: number | 'Not Rated';
         ratings: AllRatings[]
     }
+    _id: any
     boulders: Boulder[]
     constructor(public name: string, public description: string, public angle: number) {
         this.rating = {
@@ -66,7 +67,7 @@ export class Wall implements Rateable {
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length
-        this.rating.averageRating = average
+        this.rating.averageRating = parseFloat(average.toFixed(1))
     }
     addRating(rating: number) {
         this.rating.ratings.push(rating)
