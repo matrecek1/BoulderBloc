@@ -73,6 +73,9 @@ class CGym {
         };
         this.walls = [];
     }
+    addWall(wall) {
+        this.walls.push(wall);
+    }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length;
         this.rating.averageRating = parseFloat(average.toFixed(1));
