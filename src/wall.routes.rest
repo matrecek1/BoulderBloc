@@ -2,9 +2,9 @@ POST  http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls
 content-type: application/json
 
 {
-    "name": "this should be a wall on a gym",
-    "description": "this should be a wall on a gym",
-    "angle": "45"
+    "name": "etjetje",
+    "description": "etjetjetje",
+    "angle": "15"
 }
 ###
 GET http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls
@@ -13,14 +13,14 @@ PATCH http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls/63d796dfe5a28e2f
 content-type: application/json
 
 {
-    "rating": 3
+    "rating": 2
 }
 ###
 PATCH http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls/63d796dfe5a28e2fb63434fc
 content-type: application/json
 
 {
-    "name":"wsrtghwrthg",
-    "description": "A wall of bricks",
-    "angle": 0
+    "name":"this is american wall",
+    "description": "A wall of Hikes",
+    "angle": 20
 }

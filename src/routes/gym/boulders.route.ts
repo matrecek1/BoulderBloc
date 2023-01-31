@@ -1,7 +1,8 @@
 import { Router, RequestHandler } from "express"
 import { catchAsync } from "../../utils/catchAsync"
 import { BouldersController } from "../../controller/gym/boulders.controller"
-import { validateBoulderInput, validateBoulderUpdateInput, verifyGrade, verifyRating } from "../../middleware/gym/boulders.middleware"
+import { validateBoulderInput, validateBoulderUpdateInput, verifyGrade} from "../../middleware/gym/boulders.middleware"
+import { validateRating } from "../../middleware/gym/gym.middleware"
 const router = Router()
 
 const controller = new BouldersController()
@@ -16,7 +17,7 @@ router.patch('/:boulderId', validateBoulderUpdateInput, catchAsync(controller.up
 
 router.delete('/:boulderId', catchAsync(controller.deleteBoulder)) // deletes one boulder
 
-router.post('/:boulderId/ratings', verifyRating, catchAsync(controller.addRating))//add rating
+router.post('/:boulderId/ratings', validateRating, catchAsync(controller.addRating))//add rating
 
 router.patch('/:boulderId/grades/propose-grade', verifyGrade, catchAsync(controller.proposeGrade))//propose grade intoi array of proposed grades
 

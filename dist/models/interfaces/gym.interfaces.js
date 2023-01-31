@@ -61,8 +61,13 @@ class Wall {
         this.rating.ratings.push(rating);
         this.updateAverageRating();
     }
-    updateWall(body) {
-        //
+    updateWall(update) {
+        if (update.name)
+            this.name = update.name;
+        if (update.description)
+            this.description = update.description;
+        if (update.angle)
+            this.angle = update.angle;
     }
 }
 exports.Wall = Wall;

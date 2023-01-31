@@ -37,11 +37,3 @@ export const verifyGrade = (req: Request, res: Response, next: NextFunction) => 
     req.validatedBody = req.body.grade
     next()
 }
-
-export const verifyRating = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.body.rating) {
-        throw new ExpressError("No input", 400)
-    }
-    req.validatedBody = req.body.rating
-    next()
-}

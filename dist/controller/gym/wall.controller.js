@@ -16,10 +16,10 @@ const expressError_1 = require("../../utils/expressError");
 class WallController {
     addWall(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //verify the input
-            const { name, description, angle } = req.body;
+            console.log("im here");
+            const { name, description, angle } = req.validatedBody;
             const gymId = req.params.gymId;
-            const wall = new gym_interfaces_1.Wall(name, description, parseInt(angle));
+            const wall = new gym_interfaces_1.Wall(name, description, angle);
             const gym = yield gym_1.Gym.findById(gymId);
             if (!gym)
                 throw new expressError_1.ExpressError("Gym not found", 404);
@@ -56,14 +56,14 @@ class WallController {
         return __awaiter(this, void 0, void 0, function* () {
             const { gymId, wallId } = req.params;
             //validate req.body
-            const update = req.body;
+            const update = req.validatedBody;
             const gym = yield gym_1.Gym.findById(gymId);
             if (!gym)
                 return new expressError_1.ExpressError("gym not found", 404);
             let wall = gym.findWall(wallId);
             if (!wall)
                 return new expressError_1.ExpressError("wall not found", 404);
-            wall.name = req.body.name;
+            wall.updateWall(update);
             yield gym.save();
             return res.status(200).json({ message: "Successfully updated", wall });
         });

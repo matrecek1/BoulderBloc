@@ -1,6 +1,6 @@
 import { RequestHandler, Request, Response } from "express";
 import mongoose from "mongoose"
-import { CGym, Wall, Boulder } from "../../models/interfaces/gym.interfaces"
+import { CGym, Wall, Boulder, WallDescriptorsUpdate, WallDescriptors } from "../../models/interfaces/gym.interfaces"
 import { Gym } from "../../models/models/gym";
 import { WallModel } from "../../models/models/wall";
 import { ExpressError } from "../../utils/expressError";
@@ -8,10 +8,10 @@ import { AllRatings } from "../../models/interfaces/gym.interfaces";
 
 export class WallController {
     async addWall(req: Request, res: Response) {
-        //verify the input
-        const { name, description, angle } = req.body
+        console.log("im here");
+        const { name, description, angle } = req.validatedBody as WallDescriptors
         const gymId = req.params.gymId
-        const wall = new Wall(name, description, parseInt(angle))
+        const wall = new Wall(name, description, angle)
         const gym = await Gym.findById(gymId)
         if (!gym) throw new ExpressError("Gym not found", 404)
         gym.addWall(wall)
@@ -38,15 +38,14 @@ export class WallController {
     async updateWall(req: Request, res: Response) {
         const { gymId, wallId } = req.params
         //validate req.body
-        const update = req.body
+        const update:WallDescriptorsUpdate = req.validatedBody
         const gym = await Gym.findById(gymId)
         if (!gym) return new ExpressError("gym not found", 404)
         let wall = gym.findWall(wallId)
         if (!wall) return new ExpressError("wall not found", 404)
-        wall.name = req.body.name
+        wall.updateWall(update)
         await gym.save()
         return res.status(200).json({ message: "Successfully updated", wall })
     }
-    //patch route for angle name and description
     //add tons of verifications
 }

@@ -13,6 +13,18 @@ export interface Rateable {
     }
 }
 
+export interface WallDescriptors{
+    name: string,
+    description: string,
+    angle: number
+}
+
+export interface WallDescriptorsUpdate{
+    name?: string,
+    description?: string,
+    angle?: number
+}
+
 export class Boulder implements Rateable {
     rating: {
         averageRating: number | 'Not Rated';
@@ -73,8 +85,10 @@ export class Wall implements Rateable {
         this.rating.ratings.push(rating)
         this.updateAverageRating()
     }
-    updateWall(body:{name?:string, description?:string, angle?:string}){
-        //
+    updateWall(update: WallDescriptorsUpdate) {
+        if (update.name) this.name = update.name
+        if (update.description) this.description = update.description
+        if (update.angle) this.angle = update.angle
     }
 }
 
@@ -99,6 +113,7 @@ export class CGym implements Rateable {
         let wall = this.walls.find(wall => wall._id.toString() === wallId)
         return wall
     }
+    
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length
         this.rating.averageRating = parseFloat(average.toFixed(1))
