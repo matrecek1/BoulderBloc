@@ -73,6 +73,9 @@ export class Wall implements Rateable {
         this.rating.ratings.push(rating)
         this.updateAverageRating()
     }
+    updateWall(body:{name?:string, description?:string, angle?:string}){
+        //
+    }
 }
 
 
@@ -91,6 +94,10 @@ export class CGym implements Rateable {
     }
     addWall(wall:Wall){
         this.walls.push(wall)
+    }
+    findWall(wallId:string){
+        let wall = this.walls.find(wall => wall._id.toString() === wallId)
+        return wall
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length

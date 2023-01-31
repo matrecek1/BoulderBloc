@@ -6,7 +6,7 @@ import { WallModel } from "../../models/models/wall";
 import { ExpressError } from "../../utils/expressError";
 import { AllRatings } from "../../models/interfaces/gym.interfaces";
 
-export class WallController{
+export class WallController {
     async addWall(req: Request, res: Response) {
         //verify the input
         const { name, description, angle } = req.body
@@ -26,14 +26,26 @@ export class WallController{
     }
     async addRating(req: Request, res: Response) {
         const rating: AllRatings = req.body.rating
-        const {gymId, wallId} = req.params
+        const { gymId, wallId } = req.params
         const gym = await Gym.findById(gymId)
         if (!gym) return new ExpressError("gym not found", 404)
-        let wall = gym.walls.find(wall => wall._id.toString() === wallId)
+        let wall = gym.findWall(wallId)
         if (!wall) return new ExpressError("wall not found", 404)
         wall.addRating(rating)
         const savedGym = await gym.save()
         res.status(201).json({ message: "Rating added", savedGym })
+    }
+    async updateWall(req: Request, res: Response) {
+        const { gymId, wallId } = req.params
+        //validate req.body
+        const update = req.body
+        const gym = await Gym.findById(gymId)
+        if (!gym) return new ExpressError("gym not found", 404)
+        let wall = gym.findWall(wallId)
+        if (!wall) return new ExpressError("wall not found", 404)
+        wall.name = req.body.name
+        await gym.save()
+        return res.status(200).json({ message: "Successfully updated", wall })
     }
     //patch route for angle name and description
     //add tons of verifications

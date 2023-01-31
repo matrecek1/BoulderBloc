@@ -8,6 +8,8 @@ const router = (0, express_1.Router)();
 const controller = new wall_controller_1.WallController();
 router.post('/:gymId/walls', (0, catchAsync_1.catchAsync)(controller.addWall));
 router.get('/:gymId/walls', (0, catchAsync_1.catchAsync)(controller.getWalls));
+//patch and delete
+router.patch('/:gymId/walls/:wallId', (0, catchAsync_1.catchAsync)(controller.updateWall));
 router.patch('/:gymId/walls/:wallId/ratings', (0, catchAsync_1.catchAsync)(controller.addRating));
 exports.default = router;
 //# sourceMappingURL=wall.route.js.map

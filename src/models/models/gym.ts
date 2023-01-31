@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { CGym } from '../interfaces/gym.interfaces'
-import { WallModel, WallSchema } from './wall'
+import { WallSchema } from './wall'
 
 const GymSchema = new Schema<CGym>({
     name: {

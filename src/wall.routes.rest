@@ -15,3 +15,12 @@ content-type: application/json
 {
     "rating": 3
 }
+###
+PATCH http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls/63d796dfe5a28e2fb63434fc
+content-type: application/json
+
+{
+    "name":"wsrtghwrthg",
+    "description": "A wall of bricks",
+    "angle": 0
+}

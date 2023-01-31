@@ -61,6 +61,9 @@ class Wall {
         this.rating.ratings.push(rating);
         this.updateAverageRating();
     }
+    updateWall(body) {
+        //
+    }
 }
 exports.Wall = Wall;
 class CGym {
@@ -75,6 +78,10 @@ class CGym {
     }
     addWall(wall) {
         this.walls.push(wall);
+    }
+    findWall(wallId) {
+        let wall = this.walls.find(wall => wall._id.toString() === wallId);
+        return wall;
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length;

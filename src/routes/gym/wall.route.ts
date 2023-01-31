@@ -10,6 +10,9 @@ router.post('/:gymId/walls', catchAsync(controller.addWall))
 
 router.get('/:gymId/walls', catchAsync(controller.getWalls))
 
+//patch and delete
+router.patch('/:gymId/walls/:wallId', catchAsync(controller.updateWall))
+
 router.patch('/:gymId/walls/:wallId/ratings', catchAsync(controller.addRating))
 
 
