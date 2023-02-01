@@ -1,0 +1,30 @@
+POST  http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls
+content-type: application/json
+
+{
+    "name": "etjetje",
+    "description": "etjetjetje",
+    "angle": "15"
+}
+### get all walls
+GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls
+###get one wall
+GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1
+### add rating
+PATCH http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/ratings
+content-type: application/json
+
+{
+    "rating": 5
+}
+### update wall
+PATCH http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1
+content-type: application/json
+
+{
+    "name":"this is american wall",
+    "description": "A wall of Hikes",
+    "angle": 20
+}
+### delete wall
+DELETE  http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da65048db6850f875cbad7

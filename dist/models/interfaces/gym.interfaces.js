@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CGym = exports.Wall = exports.Boulder = exports.AllRatings = void 0;
+const expressError_1 = require("../../utils/expressError");
 var AllRatings;
 (function (AllRatings) {
     AllRatings[AllRatings["OneStar"] = 1] = "OneStar";
@@ -55,11 +56,19 @@ class Wall {
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length;
-        this.rating.averageRating = average;
+        this.rating.averageRating = parseFloat(average.toFixed(1));
     }
     addRating(rating) {
         this.rating.ratings.push(rating);
         this.updateAverageRating();
+    }
+    updateWall(update) {
+        if (update.name)
+            this.name = update.name;
+        if (update.description)
+            this.description = update.description;
+        if (update.angle)
+            this.angle = update.angle;
     }
 }
 exports.Wall = Wall;
@@ -76,9 +85,19 @@ class CGym {
     addWall(wall) {
         this.walls.push(wall);
     }
+    findWall(wallId) {
+        let wall = this.walls.find(wall => wall._id.toString() === wallId);
+        return wall;
+    }
+    deleteWall(wallId) {
+        let wallIndex = this.walls.findIndex(wall => wall._id.toString() === wallId);
+        if (wallIndex === -1)
+            throw new expressError_1.ExpressError("Wall not found", 404);
+        const deletedWall = this.walls.splice(wallIndex, 1);
+    }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length;
-        this.rating.averageRating = average;
+        this.rating.averageRating = parseFloat(average.toFixed(1));
     }
     addRating(rating) {
         this.rating.ratings.push(rating);

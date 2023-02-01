@@ -2,13 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { boulderSchema, boulderUpdateSchema } from "../../models/schemas/boulderSchema";
 import { ExpressError } from "../../utils/expressError";
 
-declare global {
-    namespace Express {
-        interface Request {
-            validatedBody: any;
-        }
-    }
-}
 
 export const validateBoulderInput = (req: Request, res: Response, next: NextFunction) => {
     const validatedInput = boulderSchema.validate(req.body)
@@ -35,13 +28,5 @@ export const verifyGrade = (req: Request, res: Response, next: NextFunction) => 
         throw new ExpressError("No input", 400)
     }
     req.validatedBody = req.body.grade
-    next()
-}
-
-export const verifyRating = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.body.rating) {
-        throw new ExpressError("No input", 400)
-    }
-    req.validatedBody = req.body.rating
     next()
 }

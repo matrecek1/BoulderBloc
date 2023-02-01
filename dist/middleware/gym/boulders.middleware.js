@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyRating = exports.verifyGrade = exports.validateBoulderUpdateInput = exports.validateBoulderInput = void 0;
+exports.verifyGrade = exports.validateBoulderUpdateInput = exports.validateBoulderInput = void 0;
 const boulderSchema_1 = require("../../models/schemas/boulderSchema");
 const expressError_1 = require("../../utils/expressError");
 const validateBoulderInput = (req, res, next) => {
@@ -31,12 +31,4 @@ const verifyGrade = (req, res, next) => {
     next();
 };
 exports.verifyGrade = verifyGrade;
-const verifyRating = (req, res, next) => {
-    if (!req.body.rating) {
-        throw new expressError_1.ExpressError("No input", 400);
-    }
-    req.validatedBody = req.body.rating;
-    next();
-};
-exports.verifyRating = verifyRating;
 //# sourceMappingURL=boulders.middleware.js.map

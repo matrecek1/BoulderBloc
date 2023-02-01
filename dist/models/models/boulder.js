@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BoulderModel = void 0;
+exports.BoulderModel = exports.BoulderSchema = void 0;
 const mongoose_1 = require("mongoose");
 const gym_interfaces_1 = require("../interfaces/gym.interfaces");
-const BoulderSchema = new mongoose_1.Schema({
+exports.BoulderSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: true,
@@ -18,7 +18,9 @@ const BoulderSchema = new mongoose_1.Schema({
     },
     rating: {
         averageRating: {},
-        ratings: [{}]
+        ratings: [{
+                type: String
+            }]
     },
     grade: {
         activeGrade: {
@@ -29,6 +31,6 @@ const BoulderSchema = new mongoose_1.Schema({
             }]
     }
 });
-BoulderSchema.loadClass(gym_interfaces_1.Boulder);
-exports.BoulderModel = (0, mongoose_1.model)("BoulderModel", BoulderSchema);
+exports.BoulderSchema.loadClass(gym_interfaces_1.Boulder);
+exports.BoulderModel = (0, mongoose_1.model)("BoulderModel", exports.BoulderSchema);
 //# sourceMappingURL=boulder.js.map
