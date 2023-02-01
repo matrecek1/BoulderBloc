@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Gym = void 0;
+exports.Gym = exports.GymSchema = void 0;
 const mongoose_1 = require("mongoose");
 const gym_interfaces_1 = require("../interfaces/gym.interfaces");
 const wall_1 = require("./wall");
-const GymSchema = new mongoose_1.Schema({
+exports.GymSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: true,
@@ -19,6 +19,6 @@ const GymSchema = new mongoose_1.Schema({
     },
     walls: [wall_1.WallSchema]
 });
-GymSchema.loadClass(gym_interfaces_1.CGym);
-exports.Gym = (0, mongoose_1.model)("Gym", GymSchema);
+exports.GymSchema.loadClass(gym_interfaces_1.CGym);
+exports.Gym = (0, mongoose_1.model)("Gym", exports.GymSchema);
 //# sourceMappingURL=gym.js.map

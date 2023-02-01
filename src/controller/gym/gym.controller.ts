@@ -20,9 +20,7 @@ export class GymController{
         return res.status(200).json({gyms})
     }
     async getGym(req: Request, res: Response) {
-        const gymId = req.params.gymId
-        const gym = await Gym.findById(gymId)
-        if(!gym) throw new ExpressError("Gym not found", 404)
+        const gym = req.gym
         return res.status(200).json({ gym })
     }
     async updateGym(req: Request, res:Response){
@@ -39,9 +37,7 @@ export class GymController{
     }
     async addRating(req: Request, res: Response) {
         const rating: AllRatings = req.validatedBody
-        const gymId = req.params.gymId
-        const gym = await Gym.findById(gymId).select("rating")
-        if (!gym) return new ExpressError("gym not found", 404)
+        const gym = req.gym
         gym.addRating(rating)
         const savedGym = await gym.save()
         res.status(201).json({ message: "Rating added", savedGym })

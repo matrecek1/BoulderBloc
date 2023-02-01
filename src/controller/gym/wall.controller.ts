@@ -8,27 +8,28 @@ import { AllRatings } from "../../models/interfaces/gym.interfaces";
 
 export class WallController {
     async addWall(req: Request, res: Response) {
-        console.log("im here");
         const { name, description, angle } = req.validatedBody as WallDescriptors
-        const gymId = req.params.gymId
         const wall = new Wall(name, description, angle)
-        const gym = await Gym.findById(gymId)
-        if (!gym) throw new ExpressError("Gym not found", 404)
+        const gym = req.gym
         gym.addWall(wall)
         const savedGym = await gym.save()
         res.status(201).json({ message: "Wall created", savedGym })
     }
     async getWalls(req: Request, res: Response) {
-        const gymId = req.params.gymId
-        const gym = await Gym.findById(gymId).select('walls')
-        if (!gym) throw new ExpressError("Gym not found", 404)
+        const gym = req.gym
         res.status(200).json(gym.walls)
+    }
+    async getWall(req: Request, res: Response) {
+        const { wallId } = req.params
+        const gym = req.gym
+        let wall = gym.findWall(wallId)
+        if (!wall) return new ExpressError("wall not found", 404)
+        res.status(200).json({ message: "Wall found", wall })
     }
     async addRating(req: Request, res: Response) {
         const rating: AllRatings = req.body.rating
-        const { gymId, wallId } = req.params
-        const gym = await Gym.findById(gymId)
-        if (!gym) return new ExpressError("gym not found", 404)
+        const { wallId } = req.params
+        const gym = req.gym
         let wall = gym.findWall(wallId)
         if (!wall) return new ExpressError("wall not found", 404)
         wall.addRating(rating)
@@ -36,16 +37,21 @@ export class WallController {
         res.status(201).json({ message: "Rating added", savedGym })
     }
     async updateWall(req: Request, res: Response) {
-        const { gymId, wallId } = req.params
-        //validate req.body
-        const update:WallDescriptorsUpdate = req.validatedBody
-        const gym = await Gym.findById(gymId)
-        if (!gym) return new ExpressError("gym not found", 404)
+        const { wallId } = req.params
+        const update: WallDescriptorsUpdate = req.validatedBody
+        const gym = req.gym
         let wall = gym.findWall(wallId)
         if (!wall) return new ExpressError("wall not found", 404)
         wall.updateWall(update)
         await gym.save()
-        return res.status(200).json({ message: "Successfully updated", wall })
+        return res.status(200).json({ message: "Successfully updated wall", wall })
+    }
+    async deleteWall(req: Request, res: Response) {
+        const { wallId } = req.params
+        const gym = req.gym
+        gym.deleteWall(wallId)
+        await gym.save()
+        return res.status(200).json({ message: "Successfully deleted wall" })
     }
     //add tons of verifications
 }

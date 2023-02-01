@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { gymSchema, gymUpdateSchema, ratingSchema } from "../../models/schemas/gymSchema";
 import { ExpressError } from "../../utils/expressError";
+import { Gym } from "../../models/models/gym";
 
 export const validateGymInput = (req: Request, res: Response, next: NextFunction) => {
     const validatedInput = gymSchema.validate(req.body)
@@ -30,4 +31,16 @@ export const validateRating = (req: Request, res: Response, next: NextFunction) 
     }
     req.validatedBody = validatedInput.value.rating
     next()
+}
+
+export const getGymById = async(req: Request, res: Response, next: NextFunction) =>{
+    try{
+        const { gymId } = req.params
+        const gym = await Gym.findById(gymId)
+        if (!gym) throw new ExpressError("gym not found", 404)
+        req.gym = gym
+        next()
+    } catch(err){
+        next(err)
+    }
 }

@@ -33,10 +33,7 @@ class GymController {
     }
     getGym(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const gymId = req.params.gymId;
-            const gym = yield gym_1.Gym.findById(gymId);
-            if (!gym)
-                throw new expressError_1.ExpressError("Gym not found", 404);
+            const gym = req.gym;
             return res.status(200).json({ gym });
         });
     }
@@ -60,10 +57,7 @@ class GymController {
     addRating(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const rating = req.validatedBody;
-            const gymId = req.params.gymId;
-            const gym = yield gym_1.Gym.findById(gymId).select("rating");
-            if (!gym)
-                return new expressError_1.ExpressError("gym not found", 404);
+            const gym = req.gym;
             gym.addRating(rating);
             const savedGym = yield gym.save();
             res.status(201).json({ message: "Rating added", savedGym });

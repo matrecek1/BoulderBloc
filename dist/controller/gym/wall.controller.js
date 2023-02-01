@@ -11,18 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WallController = void 0;
 const gym_interfaces_1 = require("../../models/interfaces/gym.interfaces");
-const gym_1 = require("../../models/models/gym");
 const expressError_1 = require("../../utils/expressError");
 class WallController {
     addWall(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("im here");
             const { name, description, angle } = req.validatedBody;
-            const gymId = req.params.gymId;
             const wall = new gym_interfaces_1.Wall(name, description, angle);
-            const gym = yield gym_1.Gym.findById(gymId);
-            if (!gym)
-                throw new expressError_1.ExpressError("Gym not found", 404);
+            const gym = req.gym;
             gym.addWall(wall);
             const savedGym = yield gym.save();
             res.status(201).json({ message: "Wall created", savedGym });
@@ -30,20 +25,25 @@ class WallController {
     }
     getWalls(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const gymId = req.params.gymId;
-            const gym = yield gym_1.Gym.findById(gymId).select('walls');
-            if (!gym)
-                throw new expressError_1.ExpressError("Gym not found", 404);
+            const gym = req.gym;
             res.status(200).json(gym.walls);
+        });
+    }
+    getWall(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { wallId } = req.params;
+            const gym = req.gym;
+            let wall = gym.findWall(wallId);
+            if (!wall)
+                return new expressError_1.ExpressError("wall not found", 404);
+            res.status(200).json({ message: "Wall found", wall });
         });
     }
     addRating(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const rating = req.body.rating;
-            const { gymId, wallId } = req.params;
-            const gym = yield gym_1.Gym.findById(gymId);
-            if (!gym)
-                return new expressError_1.ExpressError("gym not found", 404);
+            const { wallId } = req.params;
+            const gym = req.gym;
             let wall = gym.findWall(wallId);
             if (!wall)
                 return new expressError_1.ExpressError("wall not found", 404);
@@ -54,18 +54,24 @@ class WallController {
     }
     updateWall(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { gymId, wallId } = req.params;
-            //validate req.body
+            const { wallId } = req.params;
             const update = req.validatedBody;
-            const gym = yield gym_1.Gym.findById(gymId);
-            if (!gym)
-                return new expressError_1.ExpressError("gym not found", 404);
+            const gym = req.gym;
             let wall = gym.findWall(wallId);
             if (!wall)
                 return new expressError_1.ExpressError("wall not found", 404);
             wall.updateWall(update);
             yield gym.save();
-            return res.status(200).json({ message: "Successfully updated", wall });
+            return res.status(200).json({ message: "Successfully updated wall", wall });
+        });
+    }
+    deleteWall(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { wallId } = req.params;
+            const gym = req.gym;
+            gym.deleteWall(wallId);
+            yield gym.save();
+            return res.status(200).json({ message: "Successfully deleted wall" });
         });
     }
 }

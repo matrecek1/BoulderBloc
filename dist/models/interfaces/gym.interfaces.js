@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CGym = exports.Wall = exports.Boulder = exports.AllRatings = void 0;
+const expressError_1 = require("../../utils/expressError");
 var AllRatings;
 (function (AllRatings) {
     AllRatings[AllRatings["OneStar"] = 1] = "OneStar";
@@ -87,6 +88,12 @@ class CGym {
     findWall(wallId) {
         let wall = this.walls.find(wall => wall._id.toString() === wallId);
         return wall;
+    }
+    deleteWall(wallId) {
+        let wallIndex = this.walls.findIndex(wall => wall._id.toString() === wallId);
+        if (wallIndex === -1)
+            throw new expressError_1.ExpressError("Wall not found", 404);
+        const deletedWall = this.walls.splice(wallIndex, 1);
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length;

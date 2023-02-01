@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose'
 import { CGym } from '../interfaces/gym.interfaces'
 import { WallSchema } from './wall'
 
-const GymSchema = new Schema<CGym>({
+export const GymSchema = new Schema<CGym>({
     name: {
         type: String,
         required: true,

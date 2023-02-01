@@ -2,13 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { boulderSchema, boulderUpdateSchema } from "../../models/schemas/boulderSchema";
 import { ExpressError } from "../../utils/expressError";
 
-declare global {
-    namespace Express {
-        interface Request {
-            validatedBody: any;
-        }
-    }
-}
 
 export const validateBoulderInput = (req: Request, res: Response, next: NextFunction) => {
     const validatedInput = boulderSchema.validate(req.body)

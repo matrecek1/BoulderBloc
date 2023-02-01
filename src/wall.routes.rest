@@ -1,4 +1,4 @@
-POST  http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls
+POST  http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls
 content-type: application/json
 
 {
@@ -6,17 +6,19 @@ content-type: application/json
     "description": "etjetjetje",
     "angle": "15"
 }
-###
-GET http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls
-###
-PATCH http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls/63d796dfe5a28e2fb63434fc/ratings
+### get all walls
+GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls
+###get one wall
+GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1
+### add rating
+PATCH http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/ratings
 content-type: application/json
 
 {
-    "rating": 2
+    "rating": 5
 }
-###
-PATCH http://localhost:3000/gyms/63d6e656b25f2b8b96da8240/walls/63d796dfe5a28e2fb63434fc
+### update wall
+PATCH http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1
 content-type: application/json
 
 {
@@ -24,3 +26,5 @@ content-type: application/json
     "description": "A wall of Hikes",
     "angle": 20
 }
+### delete wall
+DELETE  http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da65048db6850f875cbad7

@@ -1,3 +1,13 @@
+import { ExpressError } from "../../utils/expressError";
+import { Gym, GymSchema } from "../models/gym";
+declare global {
+    namespace Express {
+        interface Request {
+            validatedBody: any;
+            gym:any;
+        }
+    }
+}
 
 export enum AllRatings {
     OneStar = 1,
@@ -113,7 +123,11 @@ export class CGym implements Rateable {
         let wall = this.walls.find(wall => wall._id.toString() === wallId)
         return wall
     }
-    
+    deleteWall(wallId:string){
+        let wallIndex = this.walls.findIndex(wall => wall._id.toString() === wallId)
+        if(wallIndex === -1)throw new ExpressError("Wall not found", 404)
+        const deletedWall = this.walls.splice(wallIndex, 1)
+    }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length
         this.rating.averageRating = parseFloat(average.toFixed(1))
