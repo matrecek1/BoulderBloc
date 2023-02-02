@@ -12,40 +12,37 @@ content-type: application/json
 ###
 GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders
 ###
-PATCH  http://localhost:3000/boulders/63d648df7aee3154c89dc546
+GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/63da77f16d061a3dfb599058
+###
+PATCH http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/63da77f16d061a3dfb599058
 content-type: application/json
 
 {
-    "name": "this is ameriCA", 
-    "description": "rwgwrgwreg",
-    "imgUrl": "http://thisisboulderimage.com"
+    "name": "wrgwrhg", 
+    "description": "ffffffff",
+    "imgUrl": "http://tsrwghimage.com",
+    "bGrade": "8A+"
 }
 
 ###
-DELETE  http://localhost:3000/boulders/63d648df7aee3154c89dc546
+DELETE  http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/63da77f16d061a3dfb599058
 
 ###
-POST http://localhost:3000/boulders/63d6c20b780318843a67a541/ratings
+POST http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/63da77f16d061a3dfb599058/ratings
 content-type: application/json
 
 {
     "rating": 1
 }
 ###
-PATCH  http://localhost:3000/boulders/63d648df7aee3154c89dc546/grades/propose-grade
+PATCH  http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/63da77f16d061a3dfb599058/grades
 content-type: application/json
 
 {
     "grade": "8A"
 }
 ###
-PATCH  http://localhost:3000/boulders/63d648df7aee3154c89dc546/grades/change-grade
-content-type: application/json
 
-{
-    "grade": "7A"
-}
-###
 
 
 
