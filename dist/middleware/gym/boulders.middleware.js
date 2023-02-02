@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyGrade = exports.validateBoulderUpdateInput = exports.validateBoulderInput = void 0;
 const boulderSchema_1 = require("../../models/schemas/boulderSchema");
 const expressError_1 = require("../../utils/expressError");
+const boulderSchema_2 = require("../../models/schemas/boulderSchema");
 const validateBoulderInput = (req, res, next) => {
     const validatedInput = boulderSchema_1.boulderSchema.validate(req.body);
     if (validatedInput.error) {
@@ -26,10 +27,10 @@ const validateBoulderUpdateInput = (req, res, next) => {
 };
 exports.validateBoulderUpdateInput = validateBoulderUpdateInput;
 const verifyGrade = (req, res, next) => {
-    if (!req.body.grade) {
-        throw new expressError_1.ExpressError("No input", 400);
-    }
-    req.validatedBody = req.body.grade;
+    const validatedGrade = (0, boulderSchema_2.validateGrade)(req.body.grade.toUpperCase());
+    if (!validatedGrade)
+        throw new expressError_1.ExpressError("Invalid Grade", 400);
+    req.validatedBody = validatedGrade;
     next();
 };
 exports.verifyGrade = verifyGrade;

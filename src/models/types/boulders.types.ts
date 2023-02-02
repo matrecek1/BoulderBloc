@@ -8,24 +8,28 @@ export interface BoulderDescriptors {
     imgUrl: string
 }
 
+export type Grade = "5" | "5A" | "5A+" | "5B" | '5B+' | "5C" | "5C+" | "6A" |
+    "6A+" | "6B" | '6B+' | "6C" | "6C+" | "7A" | "7A+" | "7B" | '7B+' | "7C" | "7C+" |
+    "8A" | "8A+" | "8B" | '8B+' | "8C" | "8C+"
+
 export interface BoulderDescriptorsUpdate {
     name?: string,
     description?: string,
-    bGrade?: string,
+    bGrade?: Grade,
     imgUrl?: string
 }
 
 export class Boulder implements Rateable {
     rating: {
-        averageRating: number | 'Not Rated';
+        averageRating: AllRatings| 'Not Rated';
         ratings: AllRatings[]
     }
     grade: {
-        activeGrade: string;
-        proposedGrades: string[];
+        activeGrade: Grade;
+        proposedGrades: Grade[];
     }
     _id: any;
-    constructor(public name: string, public description: string, bGrade: string, public imgUrl: string) {
+    constructor(public name: string, public description: string, bGrade: Grade, public imgUrl: string) {
         this.rating = {
             averageRating: 'Not Rated',
             ratings: []
@@ -35,7 +39,7 @@ export class Boulder implements Rateable {
             proposedGrades: []
         }
     }
-    proposeGrade(grade: string) {
+    proposeGrade(grade: Grade) {
         this.grade.proposedGrades.push(grade)
     }
     updateBoulder(update: BoulderDescriptorsUpdate) {
@@ -48,7 +52,7 @@ export class Boulder implements Rateable {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length
         this.rating.averageRating = parseFloat(average.toFixed(1))
     }
-    addRating(rating: number) {
+    addRating(rating: AllRatings) {
         this.rating.ratings.push(rating)
         this.updateAverageRating()
     }

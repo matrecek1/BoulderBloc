@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { boulderSchema, boulderUpdateSchema } from "../../models/schemas/boulderSchema";
 import { ExpressError } from "../../utils/expressError";
+import { validateGrade } from "../../models/schemas/boulderSchema";
 
 
 export const validateBoulderInput = (req: Request, res: Response, next: NextFunction) => {
@@ -26,9 +27,8 @@ export const validateBoulderUpdateInput = (req: Request, res: Response, next: Ne
 }
 
 export const verifyGrade = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.body.grade) {
-        throw new ExpressError("No input", 400)
-    }
-    req.validatedBody = req.body.grade
+    const validatedGrade = validateGrade(req.body.grade.toUpperCase())
+    if(!validatedGrade) throw new ExpressError("Invalid Grade", 400)
+    req.validatedBody = validatedGrade
     next()
 }
