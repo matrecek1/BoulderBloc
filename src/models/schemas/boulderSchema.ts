@@ -11,4 +11,5 @@ export const boulderUpdateSchema = Joi.object({
     name: Joi.string().min(2).max(30),
     imgUrl: Joi.string(),
     description: Joi.string().min(4),
+    bGrade: Joi.string(),
 })

@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { CGym } from '../interfaces/gym.interfaces'
+import { CGym } from '../types/gym.types'
 import { WallSchema } from './wall'
 
 export const GymSchema = new Schema<CGym>({
@@ -17,7 +17,7 @@ export const GymSchema = new Schema<CGym>({
         ratings: [{
         }]
     },
-    walls:[WallSchema]
+    walls: [WallSchema]
 })
 
 GymSchema.loadClass(CGym)

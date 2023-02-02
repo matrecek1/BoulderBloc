@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BoulderModel = exports.BoulderSchema = void 0;
 const mongoose_1 = require("mongoose");
-const gym_interfaces_1 = require("../interfaces/gym.interfaces");
+const boulders_types_1 = require("../types/boulders.types");
 exports.BoulderSchema = new mongoose_1.Schema({
     name: {
         type: String,
@@ -31,6 +31,6 @@ exports.BoulderSchema = new mongoose_1.Schema({
             }]
     }
 });
-exports.BoulderSchema.loadClass(gym_interfaces_1.Boulder);
+exports.BoulderSchema.loadClass(boulders_types_1.Boulder);
 exports.BoulderModel = (0, mongoose_1.model)("BoulderModel", exports.BoulderSchema);
 //# sourceMappingURL=boulder.js.map

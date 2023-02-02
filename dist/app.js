@@ -28,9 +28,9 @@ function main() {
 }
 main().catch(err => console.log(err));
 app.use(express_1.default.json());
-app.use("/boulders", boulders_route_1.default);
 app.use('/gyms', gym_route_1.default);
 app.use('/gyms', wall_route_1.default);
+app.use('/gyms', boulders_route_1.default);
 app.all("*", (req, res, next) => {
     next(new expressError_1.ExpressError("page not found", 404));
 });

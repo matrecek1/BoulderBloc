@@ -1,8 +1,9 @@
 import { Router, RequestHandler } from "express"
 import { validateRating, getGymById } from "../../middleware/gym/gym.middleware"
-import { validateWallInput, validateWallUpdateInput } from "../../middleware/gym/wall.middleware"
+import { getWallById, validateWallInput, validateWallUpdateInput } from "../../middleware/gym/wall.middleware"
 import { catchAsync } from "../../utils/catchAsync"
 import { WallController } from "../../controller/gym/wall.controller"
+
 
 //they all need gymId
 const router = Router()

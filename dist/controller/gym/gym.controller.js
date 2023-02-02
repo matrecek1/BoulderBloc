@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GymController = void 0;
-const gym_interfaces_1 = require("../../models/interfaces/gym.interfaces");
+const gym_types_1 = require("../../models/types/gym.types");
 const gym_1 = require("../../models/models/gym");
 const expressError_1 = require("../../utils/expressError");
 class GymController {
@@ -19,7 +19,7 @@ class GymController {
     addGym(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, description } = req.validatedBody;
-            const gym = new gym_interfaces_1.CGym(name, description);
+            const gym = new gym_types_1.CGym(name, description);
             const newGym = new gym_1.Gym(gym);
             const savedGym = yield newGym.save();
             return res.status(201).json({ message: "gym added", savedGym });

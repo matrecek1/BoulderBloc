@@ -14,12 +14,14 @@ const validateBoulderInput = (req, res, next) => {
 };
 exports.validateBoulderInput = validateBoulderInput;
 const validateBoulderUpdateInput = (req, res, next) => {
+    console.log('req.body :>> ', req.body);
     const validatedInput = boulderSchema_1.boulderUpdateSchema.validate(req.body);
     if (validatedInput.error) {
         let msg = validatedInput.error.details.map((el) => el.message).join(",");
         throw new expressError_1.ExpressError(msg, 400);
     }
     req.validatedBody = validatedInput.value;
+    console.log('req.validatedBody :>> ', req.validatedBody);
     next();
 };
 exports.validateBoulderUpdateInput = validateBoulderUpdateInput;

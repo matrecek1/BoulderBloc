@@ -1,10 +1,10 @@
-import {Schema, model} from 'mongoose'
-import { Boulder } from '../interfaces/gym.interfaces'
+import { Schema, model } from 'mongoose'
+import { Boulder } from '../types/boulders.types'
 
 export const BoulderSchema = new Schema<Boulder>({
     name: {
         type: String,
-        required:true,
+        required: true,
     },
     description: {
         type: String,
@@ -15,17 +15,17 @@ export const BoulderSchema = new Schema<Boulder>({
         required: true
     },
     rating: {
-        averageRating:{
+        averageRating: {
         },
-        ratings:[{
+        ratings: [{
             type: String
         }]
     },
-    grade:{
+    grade: {
         activeGrade: {
             type: String,
         },
-        proposedGrades:[{
+        proposedGrades: [{
             type: String
         }]
     }

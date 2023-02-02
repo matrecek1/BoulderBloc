@@ -14,12 +14,14 @@ export const validateBoulderInput = (req: Request, res: Response, next: NextFunc
 }
 
 export const validateBoulderUpdateInput = (req: Request, res: Response, next: NextFunction) => {
+    console.log('req.body :>> ', req.body);
     const validatedInput = boulderUpdateSchema.validate(req.body)
     if (validatedInput.error) {
         let msg = validatedInput.error.details.map((el) => el.message).join(",");
         throw new ExpressError(msg, 400);
     }
     req.validatedBody = validatedInput.value
+    console.log('req.validatedBody :>> ', req.validatedBody);
     next()
 }
 

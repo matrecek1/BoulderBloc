@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CGym = exports.Wall = exports.Boulder = exports.AllRatings = void 0;
-const expressError_1 = require("../../utils/expressError");
+const expressError_1 = require("../../../utils/expressError");
 var AllRatings;
 (function (AllRatings) {
     AllRatings[AllRatings["OneStar"] = 1] = "OneStar";
