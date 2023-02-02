@@ -10,13 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WallController = void 0;
-const gym_interfaces_1 = require("../../models/interfaces/gym.interfaces");
+const wall_types_1 = require("../../models/types/wall.types");
 const expressError_1 = require("../../utils/expressError");
 class WallController {
     addWall(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, description, angle } = req.validatedBody;
-            const wall = new gym_interfaces_1.Wall(name, description, angle);
+            const wall = new wall_types_1.Wall(name, description, angle);
             const gym = req.gym;
             gym.addWall(wall);
             const savedGym = yield gym.save();

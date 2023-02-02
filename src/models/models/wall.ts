@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose'
-import { Wall, Boulder } from '../interfaces/gym.interfaces'
+import { Wall } from '../types/wall.types'
+import { Boulder } from '../types/boulders.types'
 import { BoulderModel, BoulderSchema } from './boulder'
 
 export const WallSchema = new Schema<Wall>({

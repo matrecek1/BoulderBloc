@@ -23,8 +23,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.boulderUpdateSchema = exports.boulderSchema = void 0;
+exports.boulderUpdateSchema = exports.boulderSchema = exports.validateGrade = void 0;
 const Joi = __importStar(require("joi"));
+const possibleGrades = ["5", "5A", "5A+", "5B", '5B+', "5C", "5C+", "6A",
+    "6A+", "6B", '6B+', "6C", "6C+", "7A", "7A+", "7B", '7B+', "7C", "7C+",
+    "8A", "8A+", "8B", '8B+', "8C", "8C+"];
+const validateGrade = (grade) => {
+    if (possibleGrades.includes(grade))
+        return grade;
+    return;
+};
+exports.validateGrade = validateGrade;
 exports.boulderSchema = Joi.object({
     name: Joi.string().min(2).max(30).required(),
     description: Joi.string().min(4).required(),
@@ -35,5 +44,6 @@ exports.boulderUpdateSchema = Joi.object({
     name: Joi.string().min(2).max(30),
     imgUrl: Joi.string(),
     description: Joi.string().min(4),
+    bGrade: Joi.string(),
 });
 //# sourceMappingURL=boulderSchema.js.map

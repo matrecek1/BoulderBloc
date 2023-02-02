@@ -22,3 +22,17 @@ export const validateWallUpdateInput = (req: Request, res: Response, next: NextF
     req.validatedBody = validatedInput.value
     next()
 }
+
+export const getWallById = (req: Request, res: Response, next: NextFunction) =>{
+    try{
+        const { wallId } = req.params
+        const gym = req.gym
+        let wall = gym.findWall(wallId)
+        if (!wall) return new ExpressError("wall not found", 404)
+        req.wall = wall
+        next()
+    }
+    catch(err){
+        next(err)
+    }
+}

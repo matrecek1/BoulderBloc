@@ -1,10 +1,10 @@
 import express, { RequestHandler, Request, Response, NextFunction } from "express"
 import { BoulderModel } from "./models/models/boulder";
 import mongoose from 'mongoose'
-import { Boulder } from "./models/interfaces/gym.interfaces";
+import { Boulder } from "./models/types/boulders.types";
 import { ExpressError } from "./utils/expressError";
 
-import justBoulders from "./routes/gym/boulders.route"
+import boulderRoutes from "./routes/gym/boulders.route"
 import gymRoutes from "./routes/gym/gym.route"
 import wallRoutes from "./routes/gym/wall.route"
 
@@ -20,9 +20,9 @@ main().catch(err => console.log(err));
 
 app.use(express.json())
 
-app.use("/boulders", justBoulders)
 app.use('/gyms', gymRoutes)
 app.use('/gyms', wallRoutes)
+app.use('/gyms', boulderRoutes)
 
 
 app.all("*", (req, res, next) => {

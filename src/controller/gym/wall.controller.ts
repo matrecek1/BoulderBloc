@@ -1,10 +1,7 @@
-import { RequestHandler, Request, Response } from "express";
-import mongoose from "mongoose"
-import { CGym, Wall, Boulder, WallDescriptorsUpdate, WallDescriptors } from "../../models/interfaces/gym.interfaces"
-import { Gym } from "../../models/models/gym";
-import { WallModel } from "../../models/models/wall";
+import { Request, Response } from "express";
+import { Wall, WallDescriptors, WallDescriptorsUpdate } from "../../models/types/wall.types";
 import { ExpressError } from "../../utils/expressError";
-import { AllRatings } from "../../models/interfaces/gym.interfaces";
+import { AllRatings } from "../../models/types/gym.types";
 
 export class WallController {
     async addWall(req: Request, res: Response) {

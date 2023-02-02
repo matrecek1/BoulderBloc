@@ -1,11 +1,11 @@
 import { RequestHandler, Request, Response } from "express";
 import mongoose from "mongoose"
-import { CGym, Wall, Boulder } from "../../models/interfaces/gym.interfaces"
+import { CGym } from "../../models/types/gym.types"
 import { Gym } from "../../models/models/gym";
 import { ExpressError } from "../../utils/expressError";
-import { AllRatings } from "../../models/interfaces/gym.interfaces";
+import { AllRatings } from "../../models/types/gym.types";
 
-export class GymController{
+export class GymController {
     //add rating
     //update some data-description or name
     async addGym(req: Request, res: Response) {
@@ -17,23 +17,23 @@ export class GymController{
     }
     async getGyms(req: Request, res: Response) {
         const gyms = await Gym.find()
-        return res.status(200).json({gyms})
+        return res.status(200).json({ gyms })
     }
     async getGym(req: Request, res: Response) {
         const gym = req.gym
         return res.status(200).json({ gym })
     }
-    async updateGym(req: Request, res:Response){
+    async updateGym(req: Request, res: Response) {
         const gymId = req.params.gymId
         const update = req.validatedBody
         await Gym.findByIdAndUpdate(gymId, update)
-        return res.status(200).json({message:"Successfully updated"})
+        return res.status(200).json({ message: "Successfully updated" })
     }
-    async deleteGym(req:Request, res:Response){
+    async deleteGym(req: Request, res: Response) {
         const gymId = req.params.gymId
         const deletedGym = await Gym.findByIdAndDelete(gymId)
-        if(!deletedGym) throw new ExpressError("Gym not found", 404)
-        return res.status(200).json({message:"Successfully deleted", deletedGym})
+        if (!deletedGym) throw new ExpressError("Gym not found", 404)
+        return res.status(200).json({ message: "Successfully deleted", deletedGym })
     }
     async addRating(req: Request, res: Response) {
         const rating: AllRatings = req.validatedBody

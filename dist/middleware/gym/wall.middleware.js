@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateWallUpdateInput = exports.validateWallInput = void 0;
+exports.getWallById = exports.validateWallUpdateInput = exports.validateWallInput = void 0;
 const wallSchema_1 = require("../../models/schemas/wallSchema");
 const expressError_1 = require("../../utils/expressError");
 const validateWallInput = (req, res, next) => {
@@ -24,4 +24,19 @@ const validateWallUpdateInput = (req, res, next) => {
     next();
 };
 exports.validateWallUpdateInput = validateWallUpdateInput;
+const getWallById = (req, res, next) => {
+    try {
+        const { wallId } = req.params;
+        const gym = req.gym;
+        let wall = gym.findWall(wallId);
+        if (!wall)
+            return new expressError_1.ExpressError("wall not found", 404);
+        req.wall = wall;
+        next();
+    }
+    catch (err) {
+        next(err);
+    }
+};
+exports.getWallById = getWallById;
 //# sourceMappingURL=wall.middleware.js.map
