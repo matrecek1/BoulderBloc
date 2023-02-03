@@ -6,6 +6,7 @@ import { BoulderModel } from "../../models/models/boulder";
 import { ExpressError } from "../../utils/expressError";
 
 
+
 export class BouldersController {
     async addBoulder(req: Request, res: Response) {
         const { name, description, bGrade, imgUrl } = req.validatedBody
