@@ -1,20 +1,32 @@
-import AWS from "aws-sdk"
-require('dotenv').config('../.env');
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config({path: '../../.env'})
 
-(async function(){
-    try {
-        AWS.config.setPromisesDependency(Promise)
-        AWS.config.update({
-           accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
-           secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
-           region: 'eu-central-1'
-        })
-        const s3 = new AWS.S3()
-        const response = await s3.listObjectsV2({
-            Bucket: 'boulderblocapi'
-        }).promise()
-        console.log(response);
-    } catch (e) {
-        console.log("error: ",e);
+
+
+const accesKey = process.env.AWS_S3_ACCESS_KEY_ID
+const secretKey = process.env.AWS_S3_SECRET_ACCESS_KEY
+const bucketName =  process.env.AWS_BUCKET_NAME
+const bucketRegion = process.env.AWS_BUCKET_REGION
+
+const s3 = new S3Client({
+    credentials:{
+        accessKeyId: accesKey as string,
+        secretAccessKey: secretKey as string
+    },
+    region:bucketRegion
+})
+const getImage = async() =>{
+    const params = {
+        Bucket:bucketName,
+        Key: 'IMG_0411.jpeg'
     }
-})()
+    const command = new GetObjectCommand(params);
+    const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    console.log(url);
+}
+getImage()
+
+
+

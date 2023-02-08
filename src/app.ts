@@ -1,15 +1,11 @@
 import express, { RequestHandler, Request, Response, NextFunction } from "express"
-import { BoulderModel } from "./models/models/boulder";
 import mongoose from 'mongoose'
-import { Boulder } from "./models/types/boulders.types";
 import { ExpressError } from "./utils/expressError";
-
 import boulderRoutes from "./routes/gym/boulders.route"
 import gymRoutes from "./routes/gym/gym.route"
 import wallRoutes from "./routes/gym/wall.route"
 
 const app = express();
-
 
 async function main() {
     mongoose.set('strictQuery', false)

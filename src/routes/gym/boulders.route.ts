@@ -4,8 +4,12 @@ import { BouldersController } from "../../controller/gym/boulders.controller"
 import { getBoulderById, validateBoulderInput, validateBoulderUpdateInput, verifyGrade} from "../../middleware/gym/boulders.middleware"
 import { getGymById, validateRating } from "../../middleware/gym/gym.middleware"
 import { getWallById } from "../../middleware/gym/wall.middleware"
+import multer from "multer"
 const router = Router()
 
+// const storage = multer.memoryStorage()
+// const upload = multer({ storage })
+//multer not yet used https://www.youtube.com/watch?v=eQAIojcArRY
 const controller = new BouldersController()
 
 router.get('/:gymId/walls/:wallId/boulders', getGymById, getWallById,catchAsync(controller.getBoulders))
