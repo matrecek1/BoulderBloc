@@ -5,8 +5,9 @@ export interface BoulderDescriptors {
     name: string,
     description: string,
     bGrade: string,
-    imgUrl: string
+    imgName: string
 }
+
 
 export type Grade = "5" | "5A" | "5A+" | "5B" | '5B+' | "5C" | "5C+" | "6A" |
     "6A+" | "6B" | '6B+' | "6C" | "6C+" | "7A" | "7A+" | "7B" | '7B+' | "7C" | "7C+" |
@@ -16,7 +17,7 @@ export interface BoulderDescriptorsUpdate {
     name?: string,
     description?: string,
     bGrade?: Grade,
-    imgUrl?: string
+    imgName?: string
 }
 
 export class Boulder implements Rateable {
@@ -29,7 +30,7 @@ export class Boulder implements Rateable {
         proposedGrades: Grade[];
     }
     _id: any;
-    constructor(public name: string, public description: string, bGrade: Grade, public imgUrl: string) {
+    constructor(public name: string, public description: string, bGrade: Grade,public imgName:string) {
         this.rating = {
             averageRating: 'Not Rated',
             ratings: []
@@ -46,7 +47,7 @@ export class Boulder implements Rateable {
         if (update.name) this.name = update.name
         if (update.description) this.description = update.description
         if (update.bGrade) this.grade.activeGrade = update.bGrade
-        if (update.imgUrl) this.imgUrl = update.imgUrl
+        if (update.imgName) this.imgName = update.imgName
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length

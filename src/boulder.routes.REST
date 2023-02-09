@@ -6,7 +6,6 @@ content-type: application/json
 {
     "name": "The Two", 
     "description": "Bouldery Boulder",
-    "imgUrl":  "http://thisisboulderimage.com",
     "bGrade": "7B+"
 }
 ###

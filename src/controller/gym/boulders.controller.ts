@@ -5,12 +5,23 @@ import { Boulder, BoulderDescriptorsUpdate, Grade } from "../../models/types/bou
 import { BoulderModel } from "../../models/models/boulder";
 import { ExpressError } from "../../utils/expressError";
 
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config({ path: '../.env' })
+import { getImageFromAws } from "../../utils/awsUpload";
+
+
 
 
 export class BouldersController {
     async addBoulder(req: Request, res: Response) {
-        const { name, description, bGrade, imgUrl } = req.validatedBody
-        const boulder = new Boulder(name, description, bGrade, imgUrl);
+        const { name, description, bGrade, imgName } = req.validatedBody
+        console.log('req.file :>> ', req.file);
+        req.file?.buffer
+        //here i will have imgName and the image file will be stored on req.file
+        //i will make random name for the img which i will then store on aws and the name in mongo
+        const boulder = new Boulder(name, description, bGrade, imgName);
         const wall = req.wall
         wall.addBoulder(boulder)
         const gym = req.gym
@@ -19,6 +30,7 @@ export class BouldersController {
     }
 
     async getBoulders(req: Request, res: Response) {
+        console.log(await getImageFromAws());
         const wall = req.wall
         const boulders = wall.boulders
         res.status(200).json(boulders);
