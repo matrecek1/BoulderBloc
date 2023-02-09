@@ -29,6 +29,7 @@ export class Boulder implements Rateable {
         activeGrade: Grade;
         proposedGrades: Grade[];
     }
+    imgUrl?: string;
     _id: any;
     constructor(public name: string, public description: string, bGrade: Grade,public imgName:string) {
         this.rating = {

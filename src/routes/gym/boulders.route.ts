@@ -15,6 +15,8 @@ router.get('/:gymId/walls/:wallId/boulders', getGymById, getWallById,catchAsync(
 
 router.post('/:gymId/walls/:wallId/boulders', upload.single('image'),processImage,validateBoulderInput, getGymById, getWallById, catchAsync(controller.addBoulder))
 
+router.delete('/:gymId/walls/:wallId/boulders', getGymById, getWallById, catchAsync(controller.deleteAllBoulders))
+
 router.get('/:gymId/walls/:wallId/boulders/:boulderId', getGymById, getWallById, getBoulderById, catchAsync(controller.getBoulder)) // gets one boulder
 
 router.patch('/:gymId/walls/:wallId/boulders/:boulderId', validateBoulderUpdateInput, getGymById, getWallById, getBoulderById, catchAsync(controller.updateBoulder)) // updates one boulder

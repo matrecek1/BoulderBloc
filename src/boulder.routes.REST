@@ -11,6 +11,8 @@ content-type: application/json
 ###
 GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders
 ###
+DELETE http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders
+###
 GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/63da77f16d061a3dfb599058
 ###
 PATCH http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/63da77f16d061a3dfb599058

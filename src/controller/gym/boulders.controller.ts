@@ -17,10 +17,6 @@ import { getImageFromAws } from "../../utils/awsUpload";
 export class BouldersController {
     async addBoulder(req: Request, res: Response) {
         const { name, description, bGrade, imgName } = req.validatedBody
-        console.log('req.file :>> ', req.file);
-        req.file?.buffer
-        //here i will have imgName and the image file will be stored on req.file
-        //i will make random name for the img which i will then store on aws and the name in mongo
         const boulder = new Boulder(name, description, bGrade, imgName);
         const wall = req.wall
         wall.addBoulder(boulder)
@@ -30,7 +26,8 @@ export class BouldersController {
     }
 
     async getBoulders(req: Request, res: Response) {
-        console.log(await getImageFromAws());
+        const imageUrl = await getImageFromAws('ee8773c3f43e0917082c2a34e470948e')
+        console.log('imageUrl :>> ', imageUrl);
         const wall = req.wall
         const boulders = wall.boulders
         res.status(200).json(boulders);
@@ -46,8 +43,16 @@ export class BouldersController {
         const boulderId = req.params.boulderId
         const wall = req.wall
         const deletedBoulder = wall.deleteBoulder(boulderId)
-        gym.save()
+        await gym.save()
         res.status(200).json({ message: "boulder deleted", deletedBoulder });
+    }
+    async deleteAllBoulders(req:Request, res:Response) {
+        const gym = req.gym
+        const wall = req.wall
+        wall.deleteAllBoulders()
+        if(wall.boulders.length !== 0) throw new ExpressError("Delete failed", 500)
+        await gym.save()
+        res.status(200).json({ message:"deleted all boulders"})
     }
     async updateBoulder(req: Request, res: Response) {
         const boulder = req.boulder

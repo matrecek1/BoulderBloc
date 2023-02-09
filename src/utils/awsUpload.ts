@@ -17,10 +17,10 @@ const s3 = new S3Client({
     },
     region:bucketRegion
 }) 
-export const getImageFromAws = async() =>{
+export const getImageFromAws = async(key:string) =>{
     const params = {
         Bucket:bucketName,
-        Key: 'IMG_0411.jpeg'
+        Key: key
     }
     const command = new GetObjectCommand(params);
     const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
@@ -40,6 +40,8 @@ export const putImageToAWS = async(params:IAWSPutParams) =>{
     })
     await s3.send(command)
 }
+
+// export const deleteFromAWS = async (key:string)
 
 
 
