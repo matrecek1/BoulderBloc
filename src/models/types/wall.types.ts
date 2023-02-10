@@ -43,7 +43,8 @@ export class Wall implements Rateable {
         return deletedBoulder[0]
     }
     deleteAllBoulders(){
-        this.boulders = []
+        const deletedBoulders = this.boulders.splice(0, this.boulders.length)
+        return deletedBoulders
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length

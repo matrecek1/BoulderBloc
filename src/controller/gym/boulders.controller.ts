@@ -49,8 +49,12 @@ export class BouldersController {
     async deleteAllBoulders(req:Request, res:Response) {
         const gym = req.gym
         const wall = req.wall
-        wall.deleteAllBoulders()
+        const deletedBoulders = wall.deleteAllBoulders()
         if(wall.boulders.length !== 0) throw new ExpressError("Delete failed", 500)
+        //function to cascade delete all images from aws that belong to the deleted wall
+        for(let boulder of deletedBoulders){
+            await deleteImageFromAWS(boulder.imgName)
+        }
         await gym.save()
         res.status(200).json({ message:"deleted all boulders"})
     }

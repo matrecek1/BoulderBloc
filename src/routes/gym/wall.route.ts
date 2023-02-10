@@ -15,7 +15,7 @@ router.get('/:gymId/walls', getGymById, catchAsync(controller.getWalls))
 router.get('/:gymId/walls/:wallId', getGymById, catchAsync(controller.getWall))
 
 //patch and delete
-router.delete('/:gymId/walls/:wallId', getGymById, catchAsync(controller.deleteWall))
+router.delete('/:gymId/walls/:wallId', getGymById, getWallById,catchAsync(controller.deleteWall))
 
 router.patch('/:gymId/walls/:wallId', validateWallUpdateInput, getGymById, catchAsync(controller.updateWall))
 

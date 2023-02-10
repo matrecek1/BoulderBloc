@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { Wall, WallDescriptors, WallDescriptorsUpdate } from "../../models/types/wall.types";
 import { ExpressError } from "../../utils/expressError";
 import { AllRatings } from "../../models/types/gym.types";
+import { Boulder } from "../../models/types/boulders.types";
+import { deleteImageFromAWS } from "../../utils/awsUpload";
 
 export class WallController {
     async addWall(req: Request, res: Response) {
@@ -46,7 +48,10 @@ export class WallController {
     async deleteWall(req: Request, res: Response) {
         const { wallId } = req.params
         const gym = req.gym
-        gym.deleteWall(wallId)
+        const deletedWall: Wall = gym.deleteWall(wallId)
+        for(let boulder of deletedWall.boulders){
+            await deleteImageFromAWS(boulder.imgName)
+        }
         await gym.save()
         return res.status(200).json({ message: "Successfully deleted wall" })
     }
