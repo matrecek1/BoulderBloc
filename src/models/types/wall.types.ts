@@ -39,7 +39,8 @@ export class Wall implements Rateable {
     deleteBoulder(boulderId: string) {
         let boulderIndex = this.boulders.findIndex(boulder => boulder._id.toString() === boulderId)
         if (boulderIndex === -1) throw new ExpressError("boulder not found", 404)//Probably shouldnt be here.
-        const deletedboulder = this.boulders.splice(boulderIndex, 1)
+        const deletedBoulder = this.boulders.splice(boulderIndex, 1)
+        return deletedBoulder[0]
     }
     deleteAllBoulders(){
         this.boulders = []

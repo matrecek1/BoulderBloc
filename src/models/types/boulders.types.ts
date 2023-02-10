@@ -2,10 +2,11 @@ import { Rateable } from "./gym.types";
 import { AllRatings } from "./gym.types";
 
 export interface BoulderDescriptors {
-    name: string,
-    description: string,
-    bGrade: string,
-    imgName: string
+    name: string;
+    description: string;
+    bGrade: Grade;
+    imgName: string;
+    _id: string;
 }
 
 
@@ -21,6 +22,10 @@ export interface BoulderDescriptorsUpdate {
 }
 
 export class Boulder implements Rateable {
+    name: string;
+    description: string;
+    imgName: string;
+    _id: string;
     rating: {
         averageRating: AllRatings| 'Not Rated';
         ratings: AllRatings[]
@@ -30,14 +35,17 @@ export class Boulder implements Rateable {
         proposedGrades: Grade[];
     }
     imgUrl?: string;
-    _id: any;
-    constructor(public name: string, public description: string, bGrade: Grade,public imgName:string) {
+    constructor(descriptors:BoulderDescriptors) {
+        this.name = descriptors.name
+        this.imgName = descriptors.imgName
+        this.description = descriptors.description
+        this._id = descriptors._id
         this.rating = {
             averageRating: 'Not Rated',
             ratings: []
         }
         this.grade = {
-            activeGrade: bGrade,
+            activeGrade: descriptors.bGrade,
             proposedGrades: []
         }
     }

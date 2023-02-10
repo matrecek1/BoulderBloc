@@ -3,9 +3,10 @@ import { boulderSchema, boulderUpdateSchema } from "../../models/schemas/boulder
 import { ExpressError } from "../../utils/expressError";
 import { validateGrade } from "../../models/schemas/boulderSchema";
 import { Wall } from "../../models/types/wall.types";
-import { BoulderDescriptorsUpdate } from "../../models/types/boulders.types";
+import { BoulderDescriptors, BoulderDescriptorsUpdate } from "../../models/types/boulders.types";
 import { putImageToAWS, IAWSPutParams } from "../../utils/awsUpload";
-import crypto from 'crypto'
+import { randomHexName } from "../../utils/helpers";
+import sharp from 'sharp'
 
 
 export const validateBoulderInput = (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +15,9 @@ export const validateBoulderInput = (req: Request, res: Response, next: NextFunc
         let msg = validatedInput.error.details.map((el) => el.message).join(",");
         throw new ExpressError(msg, 400);
     }
-    req.validatedBody = validatedInput.value
+    const getRandomId = randomHexName(8)
+    console.log('getRandomId :>> ', getRandomId);
+    req.validatedBody = {...validatedInput.value, _id:getRandomId}
     next()
 }
 
@@ -48,14 +51,14 @@ export const getBoulderById = (req: Request, res: Response, next: NextFunction) 
     next()
 }
 
-export const processImage = (req: Request, res: Response, next: NextFunction) =>{
+export const processImage = async (req: Request, res: Response, next: NextFunction) =>{
     if(!req.file) throw new ExpressError("Missing Image file!", 400)
-    const randomImageName = (size:number=32 ) => crypto.randomBytes(size).toString('hex')
-    const imageName = randomImageName(16)
+    const buffer = await sharp(req.file.buffer).resize({height:1920,width:1080,fit:"contain"}).withMetadata().toBuffer()
+    const imageName = randomHexName(8)
     req.body.imgName = imageName
     const params:IAWSPutParams ={
         fileName: imageName,
-        buffer:req.file.buffer,
+        buffer:buffer,
         mimetype: req.file.mimetype
     }
     putImageToAWS(params)

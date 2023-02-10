@@ -21,12 +21,11 @@ content-type: application/json
 {
     "name": "wrgwrhg", 
     "description": "ffffffff",
-    "imgUrl": "http://tsrwghimage.com",
     "bGrade": "8A+"
 }
 
 ###
-DELETE  http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/63da77f16d061a3dfb599058
+DELETE  http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/bbba23c551d26b81
 
 ###
 POST http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders/63da77f16d061a3dfb599058/ratings

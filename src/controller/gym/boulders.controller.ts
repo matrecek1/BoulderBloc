@@ -9,15 +9,14 @@ import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 dotenv.config({ path: '../.env' })
-import { getImageFromAws } from "../../utils/awsUpload";
+import { deleteImageFromAWS, getImageFromAws } from "../../utils/awsUpload";
 
 
 
 
 export class BouldersController {
     async addBoulder(req: Request, res: Response) {
-        const { name, description, bGrade, imgName } = req.validatedBody
-        const boulder = new Boulder(name, description, bGrade, imgName);
+        const boulder = new Boulder(req.validatedBody);
         const wall = req.wall
         wall.addBoulder(boulder)
         const gym = req.gym
@@ -43,6 +42,7 @@ export class BouldersController {
         const boulderId = req.params.boulderId
         const wall = req.wall
         const deletedBoulder = wall.deleteBoulder(boulderId)
+        await deleteImageFromAWS(deletedBoulder.imgName)
         await gym.save()
         res.status(200).json({ message: "boulder deleted", deletedBoulder });
     }

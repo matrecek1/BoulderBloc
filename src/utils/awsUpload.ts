@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 dotenv.config({path: '../../.env'})
@@ -38,6 +38,15 @@ export const putImageToAWS = async(params:IAWSPutParams) =>{
         Body: params.buffer,
         ContentType: params.mimetype
     })
+    await s3.send(command)
+}
+
+export const deleteImageFromAWS = async(key:string) =>{
+    const params = {
+        Bucket: bucketName,
+        Key: key
+    }
+    const command = new DeleteObjectCommand(params)
     await s3.send(command)
 }
 
