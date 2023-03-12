@@ -4,6 +4,7 @@ import { ExpressError } from "./utils/expressError";
 import boulderRoutes from "./routes/gym/boulders.route"
 import gymRoutes from "./routes/gym/gym.route"
 import wallRoutes from "./routes/gym/wall.route"
+import cors from "cors"
 import * as dotenv from 'dotenv'
 dotenv.config({ path: '../../.env' })
 
@@ -20,6 +21,7 @@ async function main() {
 main().catch(err => console.log(err));
 
 app.use(express.json())
+app.use(cors())
 
 app.use('/gyms', gymRoutes)
 app.use('/gyms', wallRoutes)

@@ -2,3 +2,5 @@ node_modules
 devLog.txt
 dist
 .env
+Dockerfile
+.dockerignore

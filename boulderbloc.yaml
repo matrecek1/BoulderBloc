@@ -1,0 +1,28 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017
+
+  boulderbloc:
+    image: boulderbloc:1.1
+    ports:
+      - 3000:3000
+    environment:
+      AWS_S3_ACCESS_KEY_ID: AKIAWPDF24VNT67JJS2A 
+      AWS_S3_SECRET_ACCESS_KEY: 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 
+      AWS_BUCKET_NAME: boulderblocapi
+      AWS_BUCKET_REGION: eu-central-1
+      PORT: 3000 
+      MONGO_URL: mongodb://mongo:27017/boulderbloc

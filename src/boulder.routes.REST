@@ -1,6 +1,6 @@
 
 ###
-POST http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders
+POST http://localhost:3000/gyms/63e77e119562b1b41941305a/walls/63e77e499562b1b41941305f/boulders
 content-type: application/json
 
 {
@@ -9,7 +9,7 @@ content-type: application/json
     "bGrade": "7B+"
 }
 ###
-GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders
+GET http://localhost:3000/gyms/63e77e119562b1b41941305a/walls/63e77e499562b1b41941305f/boulders
 ###
 DELETE http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1/boulders
 ###

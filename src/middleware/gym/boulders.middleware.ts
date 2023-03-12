@@ -53,14 +53,18 @@ export const getBoulderById = (req: Request, res: Response, next: NextFunction) 
 
 export const processImage = async (req: Request, res: Response, next: NextFunction) =>{
     if(!req.file) throw new ExpressError("Missing Image file!", 400)
-    const buffer = await sharp(req.file.buffer).resize({height:1920,width:1080,fit:"contain"}).withMetadata().toBuffer()
-    const imageName = randomHexName(8)
-    req.body.imgName = imageName
-    const params:IAWSPutParams ={
-        fileName: imageName,
-        buffer:buffer,
-        mimetype: req.file.mimetype
+    try{
+        const buffer = await sharp(req.file.buffer).resize({ height: 1920, width: 1080, fit: "contain" }).withMetadata().toBuffer()
+        const imageName = randomHexName(8)
+        req.body.imgName = imageName
+        const params: IAWSPutParams = {
+            fileName: imageName,
+            buffer: buffer,
+            mimetype: req.file.mimetype
+        }
+        putImageToAWS(params)
+        next()
+    }catch(err){
+        throw new ExpressError("Processing of image failed!", 500)
     }
-    putImageToAWS(params)
-    next()
 }

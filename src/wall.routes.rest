@@ -1,13 +1,13 @@
-POST  http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls
+POST  http://localhost:3000/gyms/63e77e119562b1b41941305a/walls
 content-type: application/json
 
 {
-    "name": "etjetje",
-    "description": "etjetjetje",
-    "angle": "15"
+    "name": "45er",
+    "description": "45er",
+    "angle": "45"
 }
 ### get all walls
-GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls
+GET http://localhost:3000/gyms/63e77e119562b1b41941305a/walls
 ###get one wall
 GET http://localhost:3000/gyms/63da64ca8db6850f875cbace/walls/63da64de8db6850f875cbad1
 ### add rating
