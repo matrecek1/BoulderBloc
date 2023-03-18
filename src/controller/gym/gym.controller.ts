@@ -16,11 +16,13 @@ export class GymController {
         return res.status(201).json({ message: "gym added", savedGym })
     }
     async getGyms(req: Request, res: Response) {
-        const gyms = await Gym.find()
+        const gyms = await Gym.find().select('-walls')
         return res.status(200).json({ gyms })
     }
     async getGym(req: Request, res: Response) {
-        const gym = req.gym
+        const { gymId } = req.params
+        const gym = await Gym.findById(gymId)
+        if (!gym) throw new ExpressError("gym not found", 404)
         return res.status(200).json({ gym })
     }
     async updateGym(req: Request, res: Response) {
@@ -37,7 +39,9 @@ export class GymController {
     }
     async addRating(req: Request, res: Response) {
         const rating: AllRatings = req.validatedBody
-        const gym = req.gym
+        const { gymId } = req.params
+        const gym = await Gym.findById(gymId)
+        if (!gym) throw new ExpressError("gym not found", 404)
         gym.addRating(rating)
         const savedGym = await gym.save()
         res.status(201).json({ message: "Rating added", savedGym })

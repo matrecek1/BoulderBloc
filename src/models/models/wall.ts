@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 import { Wall } from '../types/wall.types'
-import { Boulder } from '../types/boulders.types'
-import { BoulderModel, BoulderSchema } from './boulder'
+import { BoulderSchema } from './boulder'
+
 
 export const WallSchema = new Schema<Wall>({
     name: {

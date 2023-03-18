@@ -10,6 +10,7 @@ declare global {
             gym: any;
             wall: Wall;
             boulder: Boulder;
+            boulders: any
         }
     }
 }
@@ -53,7 +54,7 @@ export class CGym implements Rateable {
         let wallIndex = this.walls.findIndex(wall => wall._id.toString() === wallId)
         if (wallIndex === -1) throw new ExpressError("Wall not found", 404)
         const deletedWall = this.walls.splice(wallIndex, 1)
-        return deletedWall
+        return deletedWall[0]
     }
     updateAverageRating() {
         const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length

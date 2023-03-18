@@ -3,8 +3,8 @@ import { boulderSchema, boulderUpdateSchema } from "../../models/schemas/boulder
 import { ExpressError } from "../../utils/expressError";
 import { validateGrade } from "../../models/schemas/boulderSchema";
 import { Wall } from "../../models/types/wall.types";
-import { BoulderDescriptors, BoulderDescriptorsUpdate } from "../../models/types/boulders.types";
-import { putImageToAWS, IAWSPutParams } from "../../utils/awsUpload";
+import { Boulder, BoulderDescriptors, BoulderDescriptorsUpdate } from "../../models/types/boulders.types";
+import { putImageToAWS, IAWSPutParams} from "../../utils/awsUpload";
 import { randomHexName } from "../../utils/helpers";
 import sharp from 'sharp'
 
@@ -17,7 +17,7 @@ export const validateBoulderInput = (req: Request, res: Response, next: NextFunc
     }
     const getRandomId = randomHexName(8)
     console.log('getRandomId :>> ', getRandomId);
-    req.validatedBody = {...validatedInput.value, _id:getRandomId}
+    req.validatedBody = { ...validatedInput.value, _id: getRandomId }
     next()
 }
 
@@ -28,7 +28,7 @@ export const validateBoulderUpdateInput = (req: Request, res: Response, next: Ne
         throw new ExpressError(msg, 400);
     }
     const validatedUpdate = validatedInput.value as BoulderDescriptorsUpdate
-    if(validatedUpdate.bGrade){
+    if (validatedUpdate.bGrade) {
         if (!validateGrade(validatedUpdate.bGrade)) throw new ExpressError("Invalid grade", 400)
     }
     req.validatedBody = validatedUpdate
@@ -37,12 +37,12 @@ export const validateBoulderUpdateInput = (req: Request, res: Response, next: Ne
 
 export const verifyGrade = (req: Request, res: Response, next: NextFunction) => {
     const validatedGrade = validateGrade(req.body.grade.toUpperCase())
-    if(!validatedGrade) throw new ExpressError("Invalid Grade", 400)
+    if (!validatedGrade) throw new ExpressError("Invalid Grade", 400)
     req.validatedBody = validatedGrade
     next()
 }
 
-export const getBoulderById = (req: Request, res: Response, next: NextFunction) =>{
+export const getBoulderById = (req: Request, res: Response, next: NextFunction) => {
     const boulderId = req.params.boulderId
     const wall = req.wall as Wall
     const boulder = wall.findBoulder(boulderId)
@@ -51,9 +51,9 @@ export const getBoulderById = (req: Request, res: Response, next: NextFunction) 
     next()
 }
 
-export const processImage = async (req: Request, res: Response, next: NextFunction) =>{
-    if(!req.file) throw new ExpressError("Missing Image file!", 400)
-    try{
+export const processImage = async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.file) throw new ExpressError("Missing Image file!", 400)
+    try {
         const buffer = await sharp(req.file.buffer).resize({ height: 1920, width: 1080, fit: "contain" }).withMetadata().toBuffer()
         const imageName = randomHexName(8)
         req.body.imgName = imageName
@@ -64,7 +64,7 @@ export const processImage = async (req: Request, res: Response, next: NextFuncti
         }
         putImageToAWS(params)
         next()
-    }catch(err){
+    } catch (err) {
         throw new ExpressError("Processing of image failed!", 500)
     }
 }

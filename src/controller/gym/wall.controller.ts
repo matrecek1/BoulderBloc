@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Wall, WallDescriptors, WallDescriptorsUpdate } from "../../models/types/wall.types";
 import { ExpressError } from "../../utils/expressError";
-import { AllRatings } from "../../models/types/gym.types";
+import { AllRatings} from "../../models/types/gym.types";
 import { Boulder } from "../../models/types/boulders.types";
 import { deleteImageFromAWS } from "../../utils/awsUpload";
 
@@ -12,7 +12,7 @@ export class WallController {
         const gym = req.gym
         gym.addWall(wall)
         const savedGym = await gym.save()
-        res.status(201).json({ message: "Wall created", savedGym })
+        res.status(201).json({ message: "Wall created", savedWall:savedGym.walls[savedGym.walls.length -1] })
     }
     async getWalls(req: Request, res: Response) {
         const gym = req.gym
@@ -27,20 +27,16 @@ export class WallController {
     }
     async addRating(req: Request, res: Response) {
         const rating: AllRatings = req.body.rating
-        const { wallId } = req.params
         const gym = req.gym
-        let wall = gym.findWall(wallId)
-        if (!wall) return new ExpressError("wall not found", 404)
+        let wall = req.wall
         wall.addRating(rating)
         const savedGym = await gym.save()
         res.status(201).json({ message: "Rating added", savedGym })
     }
     async updateWall(req: Request, res: Response) {
-        const { wallId } = req.params
         const update: WallDescriptorsUpdate = req.validatedBody
         const gym = req.gym
-        let wall = gym.findWall(wallId)
-        if (!wall) return new ExpressError("wall not found", 404)
+        let wall = req.wall
         wall.updateWall(update)
         await gym.save()
         return res.status(200).json({ message: "Successfully updated wall", wall })
@@ -48,9 +44,11 @@ export class WallController {
     async deleteWall(req: Request, res: Response) {
         const { wallId } = req.params
         const gym = req.gym
-        const deletedWall: Wall = gym.deleteWall(wallId)
-        for(let boulder of deletedWall.boulders){
-            await deleteImageFromAWS(boulder.imgName)
+        const deletedWall= gym.deleteWall(wallId)
+        if(deletedWall.boulders.length){
+            for (let boulder of deletedWall.boulders) {
+                await deleteImageFromAWS(boulder.imgName)
+            }
         }
         await gym.save()
         return res.status(200).json({ message: "Successfully deleted wall" })

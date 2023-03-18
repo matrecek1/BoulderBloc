@@ -29,18 +29,31 @@ export const validateRating = (req: Request, res: Response, next: NextFunction) 
         let msg = validatedInput.error.details.map((el) => el.message).join(",");
         throw new ExpressError(msg, 400);
     }
-    req.validatedBody = validatedInput.value.rating
+    const {rating} = validatedInput.value
+    req.validatedBody = parseInt(rating)
     next()
 }
 
-export const getGymById = async(req: Request, res: Response, next: NextFunction) =>{
+export const getWallsFromGymById = async(req: Request, res: Response, next: NextFunction) =>{
     try{
+        const { gymId } = req.params
+        const gym = await Gym.findById(gymId).select('+walls -walls.boulders')
+        if (!gym) throw new ExpressError("gym not found", 404)
+        req.gym = gym
+        next()
+    } catch(err){
+        next(err)
+    }
+}
+
+export const getGymById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
         const { gymId } = req.params
         const gym = await Gym.findById(gymId)
         if (!gym) throw new ExpressError("gym not found", 404)
         req.gym = gym
         next()
-    } catch(err){
+    } catch (err) {
         next(err)
     }
 }

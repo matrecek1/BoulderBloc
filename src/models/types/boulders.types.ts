@@ -59,10 +59,16 @@ export class Boulder implements Rateable {
         if (update.imgName) this.imgName = update.imgName
     }
     updateAverageRating() {
-        const average = this.rating.ratings.reduce((a, b) => a + b, 0) / this.rating.ratings.length
+        const average = this.rating.ratings.reduce((a, b) => {
+            if(typeof a !== 'number') a = parseInt(a)
+            if(typeof b !== 'number') b = parseInt(b)
+            return a + b
+        }) / this.rating.ratings.length
+        console.log(average);
         this.rating.averageRating = parseFloat(average.toFixed(1))
     }
     addRating(rating: AllRatings) {
+        if(typeof rating === "string") parseInt(rating)
         this.rating.ratings.push(rating)
         this.updateAverageRating()
     }

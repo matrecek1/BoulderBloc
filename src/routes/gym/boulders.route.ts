@@ -1,8 +1,8 @@
-import { Router, RequestHandler } from "express"
+import { Router} from "express"
 import { catchAsync } from "../../utils/catchAsync"
 import { BouldersController } from "../../controller/gym/boulders.controller"
-import { getBoulderById, processImage, validateBoulderInput, validateBoulderUpdateInput, verifyGrade} from "../../middleware/gym/boulders.middleware"
-import { getGymById, validateRating } from "../../middleware/gym/gym.middleware"
+import { getBoulderById, processImage,validateBoulderInput, validateBoulderUpdateInput, verifyGrade} from "../../middleware/gym/boulders.middleware"
+import { getGymById,validateRating } from "../../middleware/gym/gym.middleware"
 import { getWallById } from "../../middleware/gym/wall.middleware"
 import multer from "multer"
 const router = Router()

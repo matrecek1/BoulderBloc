@@ -1,6 +1,7 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema, model } from 'mongoose'
 import { CGym } from '../types/gym.types'
 import { WallSchema } from './wall'
+
 
 export const GymSchema = new Schema<CGym>({
     name: {

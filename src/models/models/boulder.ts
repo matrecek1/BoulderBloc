@@ -18,6 +18,9 @@ export const BoulderSchema = new Schema<Boulder>({
     imgName: {
         type: String,
     },
+    imgUrl:{
+        type:String,
+    },
     rating: {
         averageRating: {
         },

@@ -25,15 +25,18 @@ export class BouldersController {
     }
 
     async getBoulders(req: Request, res: Response) {
-        const imageUrl = await getImageFromAws('ee8773c3f43e0917082c2a34e470948e')
-        console.log('imageUrl :>> ', imageUrl);
-        const wall = req.wall
-        const boulders = wall.boulders
+        const {boulders} = req.wall
+        for(let boulder of boulders){
+            let imgUrl = await getImageFromAws(boulder.imgName)
+            boulder.imgUrl = imgUrl
+        }
         res.status(200).json(boulders);
     }
 
     async getBoulder(req: Request, res: Response) {
         const boulder = req.boulder
+        const imgUrl = await getImageFromAws(boulder.imgName)
+        boulder.imgUrl = imgUrl
         res.status(200).json(boulder);
     }
 
@@ -62,7 +65,7 @@ export class BouldersController {
         const boulder = req.boulder
         const gym = req.gym
         const update = req.validatedBody as BoulderDescriptorsUpdate
-        boulder.updateBoulder(update)
+        boulder.updateBoulder(req.validatedBody)
         gym.save()
         res.status(200).json({ message: "boulder updated", boulder});
     }
