@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Gym } from "../../models/models/gym";
 import { wallSchema, wallUpdateSchema } from "../../models/schemas/wallSchema";
 import { ExpressError } from "../../utils/expressError";
+import mongoose from "mongoose";
 
 export const validateWallInput = (req: Request, res: Response, next: NextFunction) => {
     console.log(req.body);
@@ -41,9 +42,9 @@ export const getWallById = (req: Request, res: Response, next: NextFunction) =>{
 export const getWallWithBoulders = async(req: Request, res:Response, next: NextFunction) =>{
     try {
         const { wallId, gymId } = req.params
-        const wall = await Gym.findOne({"walls.name":"Buben"})
+        const wall = await Gym.findById(gymId).select({ "walls": { $elemMatch: { "_id": new mongoose.Types.ObjectId(wallId)} } })
         if (!wall) return new ExpressError("wall not found", 404)
-        req.wall = wall
+        req.wall = wall.walls[0]
         next()
     }
     catch (err) {

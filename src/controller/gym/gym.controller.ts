@@ -21,7 +21,7 @@ export class GymController {
     }
     async getGym(req: Request, res: Response) {
         const { gymId } = req.params
-        const gym = await Gym.findById(gymId)
+        const gym = await Gym.findById(gymId).select("-walls.boulders")
         if (!gym) throw new ExpressError("gym not found", 404)
         return res.status(200).json({ gym })
     }

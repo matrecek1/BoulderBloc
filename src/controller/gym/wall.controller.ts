@@ -20,7 +20,6 @@ export class WallController {
     }
     async getWall(req: Request, res: Response) {
         const { wallId } = req.params
-        console.log('Im here');
         const wall = req.wall
         console.log(wall);
         if (!wall) return new ExpressError("wall not found", 404)
