@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { Gym } from "../../models/models/gym";
 import { wallSchema, wallUpdateSchema } from "../../models/schemas/wallSchema";
 import { ExpressError } from "../../utils/expressError";
 
@@ -33,6 +34,19 @@ export const getWallById = (req: Request, res: Response, next: NextFunction) =>{
         next()
     }
     catch(err){
+        next(err)
+    }
+}
+
+export const getWallWithBoulders = async(req: Request, res:Response, next: NextFunction) =>{
+    try {
+        const { wallId, gymId } = req.params
+        const wall = await Gym.findOne({"walls.name":"Buben"})
+        if (!wall) return new ExpressError("wall not found", 404)
+        req.wall = wall
+        next()
+    }
+    catch (err) {
         next(err)
     }
 }

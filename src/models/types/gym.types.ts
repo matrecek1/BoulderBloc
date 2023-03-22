@@ -8,7 +8,7 @@ declare global {
         interface Request {
             validatedBody: any;
             gym: any;
-            wall: Wall;
+            wall: any;
             boulder: Boulder;
             boulders: any
         }
