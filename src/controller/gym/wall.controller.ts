@@ -3,7 +3,7 @@ import { Wall, WallDescriptors, WallDescriptorsUpdate } from "../../models/types
 import { ExpressError } from "../../utils/expressError";
 import { AllRatings} from "../../models/types/gym.types";
 import { Boulder } from "../../models/types/boulders.types";
-import { deleteImageFromAWS } from "../../utils/awsUpload";
+import { deleteImageFromAWS, getImageFromAws } from "../../utils/awsUpload";
 
 export class WallController {
     async addWall(req: Request, res: Response) {
@@ -19,9 +19,7 @@ export class WallController {
         res.status(200).json(gym.walls)
     }
     async getWall(req: Request, res: Response) {
-        const { wallId } = req.params
         const wall = req.wall
-        console.log(wall);
         if (!wall) return new ExpressError("wall not found", 404)
         res.status(200).json({ message: "Wall found", wall })
     }

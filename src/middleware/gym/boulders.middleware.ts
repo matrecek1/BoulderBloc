@@ -54,7 +54,7 @@ export const getBoulderById = (req: Request, res: Response, next: NextFunction) 
 export const processImage = async (req: Request, res: Response, next: NextFunction) => {
     if (!req.file) throw new ExpressError("Missing Image file!", 400)
     try {
-        const buffer = await sharp(req.file.buffer).resize({ height: 1920, width: 1080, fit: "contain" }).withMetadata().toBuffer()
+        const buffer = await sharp(req.file.buffer).rotate().resize(1080, 1920, {fit:"cover"}).toBuffer()
         const imageName = randomHexName(8)
         req.body.imgName = imageName
         const params: IAWSPutParams = {
